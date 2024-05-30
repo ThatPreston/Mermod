@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:heart_of_the_sea" },
+    { "item": "minecraft:diamond" }
+  ],
+  "result": {
+    "item": "mermod:sea_crystal",
+    "count": 4
+  }
+}

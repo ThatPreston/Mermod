@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "mermod:sea_crystal" },
+    { "item": "minecraft:slime_ball" }
+  ],
+  "result": {
+    "item": "mermod:moon_rock_modifier",
+    "count": 1
+  }
+}

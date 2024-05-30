@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "mermod:sea_crystal" },
+    { "item": "minecraft:nautilus_shell" }
+  ],
+  "result": {
+    "item": "mermod:ursula_shell_modifier",
+    "count": 1
+  }
+}

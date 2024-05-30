@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "io.github.thatpreston.mermod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "LivingEntityMixin",
+    "EnchantmentHelperMixin"
+  ],
+  "client": [
+    "HumanoidArmorLayerMixin",
+    "HumanoidModelMixin",
+    "PlayerRendererMixin",
+    "GameRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "ThatPreston"
+  ],
+  "contributors": [
+    "albertosaurio65",
+    "Junnaturefox"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/mermod-fabric",
+    "sources": "https://github.com/ThatPreston/Mermod"
+  },
+  "license": "${mod_license}",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.thatpreston.mermod.fabric.MermodFabric"
+    ],
+    "client": [
+      "io.github.thatpreston.mermod.fabric.MermodFabricClient"
+    ],
+    "figura_api": [
+      "io.github.thatpreston.mermod.compat.MermodFiguraAPI"
+    ],
+    "modmenu": [
+      "io.github.thatpreston.mermod.fabric.compat.ModMenuAPI"
+    ]
+  },
+  "mixins": [
+    "mermod-common.mixins.json",
+    "mermod.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=${minecraft_version}",
+    "architectury": ">=${architectury_version}"
+  }
+}
