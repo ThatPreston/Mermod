@@ -1,0 +1,14 @@
+{
+  "type": "mermod:tail_style",
+  "name": "Fabulous Fins",
+  "description": "Your legs become fins on contact with seawater!",
+  "tailColor": 16777215,
+  "hasBra": false,
+  "braColor": 16777215,
+  "hasGradient": false,
+  "gradientColor": 16777215,
+  "hasGlint": false,
+  "permanent": false,
+  "texture": "mermod:textures/tail/tail.png",
+  "model": 0
+}
