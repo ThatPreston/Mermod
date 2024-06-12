@@ -23,7 +23,7 @@ dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
     modApi "dev.architectury:architectury-neoforge:${rootProject.architectury_version}"
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
     modImplementation "top.theillusivec4.curios:curios-neoforge:${rootProject.curios_version}"
     modImplementation "org.figuramc:figura-neoforge:${rootProject.figura_version}"
     forgeRuntimeLibrary "com.github.FiguraMC.luaj:luaj-core:${rootProject.luaj_version}-figura"
