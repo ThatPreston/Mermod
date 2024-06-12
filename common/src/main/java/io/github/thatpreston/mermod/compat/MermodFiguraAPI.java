@@ -49,13 +49,14 @@ public class MermodFiguraAPI implements FiguraAPI {
             TailStyle style = Mermod.getTailStyle(player);
             if(style != null) {
                 LuaTable table = new LuaTable();
+                table.set("texture", LuaValue.valueOf(style.texture().toString()));
+                table.set("model", LuaValue.valueOf(style.model()));
                 setRGB(table, "tailColor", style.tailColor());
                 table.set("hasBra", LuaValue.valueOf(style.hasBra()));
                 setRGB(table, "braColor", style.braColor());
                 table.set("hasGradient", LuaValue.valueOf(style.hasGradient()));
                 setRGB(table, "gradientColor", style.gradientColor());
                 table.set("hasGlint", LuaValue.valueOf(style.hasGlint()));
-                table.set("texture", LuaValue.valueOf(style.texture().toString()));
                 return table;
             }
         }
