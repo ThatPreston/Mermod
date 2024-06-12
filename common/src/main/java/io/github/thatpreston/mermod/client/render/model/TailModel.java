@@ -54,7 +54,13 @@ public class TailModel extends ListModel<Player> {
     public void setupAnim(Player player, float limbSwing, float limbSwingAmount, float age, float yaw, float pitch) {
         boolean crouching = player.isCrouching();
         boolean swimming = player.isSwimming() || (player.isInWater() && !player.onGround() && !crouching);
-        if(swimming) {
+        if(player.getVehicle() != null) {
+            tail1.xRot = -Mth.PI / 2;
+            tail2.xRot = 0;
+            float x = Mth.PI / 150 * (Mth.sin(age / 12) + 3);
+            tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = x;
+            fin.xRot = x * 2;
+        } else if(swimming) {
             float speed = 0.035F;
             float scale = Mth.PI / 12;
             tail1.xRot = getAngle(age, speed, scale);
@@ -65,7 +71,7 @@ public class TailModel extends ListModel<Player> {
             tail6.xRot = getAngleWithOffset(age, -0.5F, speed, scale);
             tail7.xRot = getAngleWithOffset(age, -0.6F, speed, scale);
             fin.xRot = tail7.xRot * 2;
-        } else if(player.isVisuallySwimming() || player.getVehicle() != null) {
+        } else if(player.isVisuallySwimming()) {
             tail1.xRot = tail2.xRot = tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = fin.xRot = 0;
         } else {
             float angle = crouching ? Mth.PI / 16 : Mth.PI / 14;
