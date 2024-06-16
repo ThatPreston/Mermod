@@ -1,27 +1,27 @@
 package io.github.thatpreston.mermod.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class MermodConfig {
     public static final Server SERVER;
-    public static final ModConfigSpec SERVER_SPEC;
+    public static final ForgeConfigSpec SERVER_SPEC;
     public static final Client CLIENT;
-    public static final ModConfigSpec CLIENT_SPEC;
+    public static final ForgeConfigSpec CLIENT_SPEC;
     static {
-        final Pair<Server, ModConfigSpec> serverPair = new ModConfigSpec.Builder().configure(Server::new);
+        final Pair<Server, ForgeConfigSpec> serverPair = new ForgeConfigSpec.Builder().configure(Server::new);
         SERVER = serverPair.getLeft();
         SERVER_SPEC = serverPair.getRight();
-        final Pair<Client, ModConfigSpec> clientPair = new ModConfigSpec.Builder().configure(Client::new);
+        final Pair<Client, ForgeConfigSpec> clientPair = new ForgeConfigSpec.Builder().configure(Client::new);
         CLIENT = clientPair.getLeft();
         CLIENT_SPEC = clientPair.getRight();
     }
     public static class Server {
-        public ModConfigSpec.DoubleValue swimSpeedMultiplier;
-        public ModConfigSpec.BooleanValue waterBreathing;
-        public ModConfigSpec.BooleanValue nightVision;
-        public ModConfigSpec.BooleanValue aquaAffinity;
-        Server(ModConfigSpec.Builder builder) {
+        public ForgeConfigSpec.DoubleValue swimSpeedMultiplier;
+        public ForgeConfigSpec.BooleanValue waterBreathing;
+        public ForgeConfigSpec.BooleanValue nightVision;
+        public ForgeConfigSpec.BooleanValue aquaAffinity;
+        Server(ForgeConfigSpec.Builder builder) {
             builder.push("Server");
             swimSpeedMultiplier = builder.comment("Swim speed multiplier").defineInRange("swimSpeedMultiplier", 2.0D, 1.0D, 10.0D);
             waterBreathing = builder.comment("Water breathing").define("waterBreathing", true);
@@ -31,9 +31,9 @@ public class MermodConfig {
         }
     }
     public static class Client {
-        public ModConfigSpec.BooleanValue nightVisionFlashingFix;
-        public ModConfigSpec.BooleanValue replaceSwimAnimation;
-        Client(ModConfigSpec.Builder builder) {
+        public ForgeConfigSpec.BooleanValue nightVisionFlashingFix;
+        public ForgeConfigSpec.BooleanValue replaceSwimAnimation;
+        Client(ForgeConfigSpec.Builder builder) {
             builder.push("Client");
             nightVisionFlashingFix = builder.comment("Night vision flashing fix").define("nightVisionFlashingFix", true);
             replaceSwimAnimation = builder.comment("Replace swim animation").define("replaceSwimAnimation", true);

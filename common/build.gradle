@@ -12,7 +12,7 @@ dependencies {
     modCompileOnly "org.figuramc:figura-common-intermediary:${rootProject.figura_version}"
     compileOnly "com.github.FiguraMC.luaj:luaj-core:${rootProject.luaj_version}-figura"
     compileOnly "com.github.FiguraMC.luaj:luaj-jse:${rootProject.luaj_version}-figura"
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${rootProject.fcap_version}"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common:${rootProject.fcap_version}"
     modCompileOnly "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
 }
 

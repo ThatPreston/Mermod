@@ -4,6 +4,7 @@ import io.github.thatpreston.mermod.item.SeaNecklaceItem;
 import io.github.thatpreston.mermod.item.modifier.NecklaceModifierItem;
 import io.github.thatpreston.mermod.registry.RegistryHandler;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -15,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NecklaceModifierRecipe extends CustomRecipe {
-    public NecklaceModifierRecipe(CraftingBookCategory category) {
-        super(category);
+    public NecklaceModifierRecipe(ResourceLocation location, CraftingBookCategory category) {
+        super(location, category);
     }
     @Override
     public boolean matches(CraftingContainer container, Level level) {

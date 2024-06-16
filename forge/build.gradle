@@ -26,7 +26,7 @@ configurations {
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    forge "net.neoforged:forge:${rootProject.forge_version}"
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
@@ -35,7 +35,6 @@ dependencies {
     forgeRuntimeLibrary "com.github.FiguraMC.luaj:luaj-core:${rootProject.luaj_version}-figura"
     forgeRuntimeLibrary "com.github.FiguraMC.luaj:luaj-jse:${rootProject.luaj_version}-figura"
     forgeRuntimeLibrary "com.neovisionaries:nv-websocket-client:${rootProject.nv_websocket_version}"
-    modApi(include("fuzs.forgeconfigapiport:forgeconfigapiport-forge:${rootProject.fcap_version}"))
     modImplementation "me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}"
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5"))
     implementation "io.github.llamalad7:mixinextras-forge:0.3.5"
