@@ -38,6 +38,11 @@ dependencies {
     modImplementation "me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}"
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5"))
     implementation(include("io.github.llamalad7:mixinextras-forge:0.3.5"))
+    modImplementation "io.github.edwinmindcraft:origins-forge:${rootProject.origins_forge_version}"
+    modImplementation "io.github.edwinmindcraft:apoli-forge:${rootProject.apoli_forge_version}"
+    modImplementation "io.github.edwinmindcraft:calio-forge:${rootProject.calio_forge_version}"
+    modImplementation "top.theillusivec4.caelus:caelus-forge:${rootProject.caelus_version}"
+    modImplementation "maven.modrinth:additionalentityattributes-forge:${rootProject.aea_forge_version}"
 }
 
 processResources {

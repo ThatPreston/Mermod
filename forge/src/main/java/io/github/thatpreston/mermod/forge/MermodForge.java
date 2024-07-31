@@ -5,6 +5,7 @@ import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.config.MermodConfig;
 import io.github.thatpreston.mermod.forge.compat.CuriosCompat;
+import io.github.thatpreston.mermod.forge.compat.origins.OriginsCompat;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -25,6 +26,9 @@ public class MermodForge {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MermodConfig.CLIENT_SPEC);
         curiosLoaded = ModList.get().isLoaded("curios");
         Mermod.init();
+        if(Mermod.originsLoaded) {
+            OriginsCompat.registerPowerFactory(eventBus);
+        }
         if(FMLLoader.getDist().isClient()) {
             MermodClient.init();
         }

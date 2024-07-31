@@ -11,17 +11,15 @@ import net.minecraftforge.fml.config.ModConfig;
 
 public class MermodFabric implements ModInitializer {
     public static boolean trinketsLoaded;
-    public static boolean originsLoaded;
     @Override
     public void onInitialize() {
         Mermod.init();
         FabricLoader loader = FabricLoader.getInstance();
         trinketsLoaded = loader.isModLoaded("trinkets");
-        originsLoaded = loader.isModLoaded("origins");
         if(trinketsLoaded) {
             TrinketsCompat.init();
         }
-        if(originsLoaded) {
+        if(Mermod.originsLoaded) {
             OriginsCompat.registerPowerFactory();
         }
         ForgeConfigRegistry.INSTANCE.register(Mermod.MOD_ID, ModConfig.Type.SERVER, MermodConfig.SERVER_SPEC);

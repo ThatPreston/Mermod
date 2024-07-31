@@ -5,6 +5,7 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
+import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -13,15 +14,15 @@ import net.minecraft.world.entity.player.Player;
 import java.util.List;
 
 public class OriginsCompat {
-    private static final ResourceLocation TAIL_STYLE = new ResourceLocation("mermod", "tail_style");
+    private static final ResourceLocation TAIL_STYLE = new ResourceLocation(Mermod.MOD_ID, "tail_style");
     public static TailStyle getTailStyle(Player player) {
         List<TailPower> powers = PowerHolderComponent.getPowers(player, TailPower.class);
-        if(powers != null && powers.size() > 0) {
+        if(powers != null && !powers.isEmpty()) {
             return powers.get(0).getTailStyle();
         }
         return null;
     }
-    public static boolean hasTailStyle(Player player) {
+    public static boolean hasTailPower(Player player) {
         return PowerHolderComponent.hasPower(player, TailPower.class);
     }
     public static void registerPowerFactory() {

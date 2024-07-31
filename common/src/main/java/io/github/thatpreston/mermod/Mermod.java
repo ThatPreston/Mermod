@@ -17,10 +17,12 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Map;
 
 public class Mermod {
+    public static boolean originsLoaded;
     public static boolean figuraLoaded;
     public static final String MOD_ID = "mermod";
     public static void init() {
         RegistryHandler.register();
+        originsLoaded = Platform.isModLoaded("origins");
         figuraLoaded = Platform.isModLoaded("figura");
     }
     public static void registerCauldronInteractions() {

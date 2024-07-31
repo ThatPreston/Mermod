@@ -1,9 +1,9 @@
 package io.github.thatpreston.mermod.fabric;
 
+import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import io.github.thatpreston.mermod.fabric.compat.origins.OriginsCompat;
 import io.github.thatpreston.mermod.fabric.compat.TrinketsCompat;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -15,18 +15,15 @@ public class MermodPlatformImpl {
         return ItemStack.EMPTY;
     }
     public static TailStyle getTailStyle(Player player) {
-        if(MermodFabric.originsLoaded) {
+        if(Mermod.originsLoaded) {
             return OriginsCompat.getTailStyle(player);
         }
         return null;
     }
     public static boolean hasTailStyle(Player player) {
-        if(MermodFabric.originsLoaded) {
-            return OriginsCompat.hasTailStyle(player);
+        if(Mermod.originsLoaded) {
+            return OriginsCompat.hasTailPower(player);
         }
         return false;
-    }
-    public static boolean isModLoaded(String id) {
-        return FabricLoader.getInstance().isModLoaded(id);
     }
 }
