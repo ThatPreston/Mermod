@@ -1,0 +1,16 @@
+{
+  "item.mermod.sea_necklace": "海洋項鍊",
+  "item.mermod.sea_crystal": "海洋晶體",
+  "item.mermod.mermaid_bra_modifier": "人魚胸罩",
+  "item.mermod.glowing_pearl_modifier": "光效珍珠",
+  "item.mermod.tail_gradient_modifier": "尾巴漸層",
+  "item.mermod.tail_moisturizer_modifier": "尾巴保濕",
+  "item.mermod.moon_rock_modifier": "月之石",
+  "item.mermod.ursula_shell_modifier": "烏蘇拉之貝",
+  "item.mermod.deep_sea_crystal_modifier": "深海晶體",
+  "item.mermod.sea_necklace.tooltip": "蹲下右鍵以移除裝飾",
+  "item.mermod.necklace_modifier.tooltip": "可和項鍊組合",
+  "item.mermod.dyeable_necklace_modifier.tooltip": "可染色/可和項鍊組合",
+  "option.mermod.nightVisionFlashingFix": "夜視閃爍關閉",
+  "option.mermod.replaceSwimAnimation": "替換游泳動畫"
+}
