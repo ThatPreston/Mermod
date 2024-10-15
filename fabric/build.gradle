@@ -26,7 +26,7 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
     modImplementation "dev.emi:trinkets:${rootProject.trinkets_version}"
-    modImplementation "com.github.apace100:apoli:${rootProject.apoli_version}"
+    modImplementation "io.github.apace100:apoli:${rootProject.apoli_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components_version}"
     modImplementation "maven.modrinth:additionalentityattributes:${rootProject.additional_entity_attributes_version}"

@@ -24,7 +24,7 @@ public class Mermod {
         figuraLoaded = Platform.isModLoaded("figura");
     }
     public static void registerCauldronInteractions() {
-        Map<Item, CauldronInteraction> map = CauldronInteraction.WATER;
+        Map<Item, CauldronInteraction> map = CauldronInteraction.WATER.map();
         map.put(RegistryHandler.SEA_NECKLACE.get(), CauldronInteraction.DYED_ITEM);
         map.put(RegistryHandler.MERMAID_BRA_MODIFIER.get(), CauldronInteraction.DYED_ITEM);
         map.put(RegistryHandler.TAIL_GRADIENT_MODIFIER.get(), CauldronInteraction.DYED_ITEM);
