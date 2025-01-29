@@ -1,4 +1,4 @@
-package io.github.thatpreston.mermod.mixin;
+package io.github.thatpreston.mermod.fabric.mixin;
 
 import io.github.thatpreston.mermod.compat.MermodFiguraAPI;
 import org.figuramc.figura.avatar.Avatar;

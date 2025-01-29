@@ -16,7 +16,7 @@ public class MermodMixinConfigPlugin implements IMixinConfigPlugin {
     }
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if(mixinClassName.equals("thatpreston.mermod.client.mixin.AvatarMixin")) {
+        if(mixinClassName.endsWith("AvatarMixin")) {
             return isModLoaded("figura");
         }
         return true;
