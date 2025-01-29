@@ -30,7 +30,7 @@ public class MermodClient {
         EntityModelLayerRegistry.register(SIREN_TAIL_LAYER, TailLayerDefinitions::getSiren);
     }
     private static ModelLayerLocation createTailModelLayer(String name) {
-        ModelLayerLocation location = new ModelLayerLocation(new ResourceLocation(Mermod.MOD_ID, name), "main");
+        ModelLayerLocation location = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, name), "main");
         TAIL_MODEL_LAYERS.add(location);
         return location;
     }

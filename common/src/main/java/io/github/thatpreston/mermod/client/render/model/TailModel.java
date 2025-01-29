@@ -7,6 +7,7 @@ import io.github.thatpreston.mermod.client.render.TailStyle;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
@@ -79,38 +80,26 @@ public class TailModel extends ListModel<Player> {
         }
     }
     public void render(PoseStack stack, VertexConsumer consumer, int light, int overlay, TailStyle style) {
-        float tailRed = (style.tailColor() >> 16 & 255) / 255.0F;
-        float tailGreen = (style.tailColor() >> 8 & 255) / 255.0F;
-        float tailBlue = (style.tailColor() & 255) / 255.0F;
-        float braRed = (style.braColor() >> 16 & 255) / 255.0F;
-        float braGreen = (style.braColor() >> 8 & 255) / 255.0F;
-        float braBlue = (style.braColor() & 255) / 255.0F;
-        float gradientRed = (style.gradientColor() >> 16 & 255) / 255.0F;
-        float gradientGreen = (style.gradientColor() >> 8 & 255) / 255.0F;
-        float gradientBlue = (style.gradientColor() & 255) / 255.0F;
+        int tailColor = style.tailColor();
+        int gradientColor = style.gradientColor();
         this.main.translateAndRotate(stack);
         if(style.hasBra()) {
-            this.bra.render(stack, consumer, light, overlay, braRed, braGreen, braBlue, 1);
+            this.bra.render(stack, consumer, light, overlay, style.braColor());
         }
         AtomicInteger index = new AtomicInteger();
         this.waist.visit(stack, (entry, path, cuboidIndex, cuboid) -> {
-            float red = tailRed;
-            float green = tailGreen;
-            float blue = tailBlue;
+            int i = index.get();
+            int color = tailColor;
             if(style.hasGradient()) {
-                if(path.endsWith("fin") || path.endsWith("sidefins")) {
-                    red = gradientRed;
-                    green = gradientGreen;
-                    blue = gradientBlue;
+                if(path.endsWith("fin") || path.endsWith("sidefins") || i > 7) {
+                    color = gradientColor;
                 } else {
-                    float alpha = index.get() / 8.0F;
-                    red = Mth.lerp(alpha, red, gradientRed);
-                    green = Mth.lerp(alpha, green, gradientGreen);
-                    blue = Mth.lerp(alpha, blue, gradientBlue);
+                    float alpha = i / 8.0F;
+                    color = FastColor.ARGB32.lerp(alpha, tailColor, gradientColor);
                     index.getAndIncrement();
                 }
             }
-            cuboid.compile(entry, consumer, light, overlay, red, green, blue, 1);
+            cuboid.compile(entry, consumer, light, overlay, color);
         });
     }
 }

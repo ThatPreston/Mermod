@@ -11,16 +11,16 @@ import net.minecraft.world.item.component.DyedItemColor;
 import java.util.HashMap;
 
 public record TailStyle(ResourceLocation texture, int model, int tailColor, boolean hasBra, int braColor, boolean hasGradient, int gradientColor, boolean hasGlint, boolean permanent) {
-    public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Mermod.MOD_ID, "textures/tail/tail.png");
+    public static final ResourceLocation DEFAULT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, "textures/tail/tail.png");
     private static final HashMap<String, ResourceLocation> TAIL_LOCATION_CACHE = new HashMap<>();
     public static TailStyle fromNecklace(ItemStack necklace) {
         NecklaceModifiers component = necklace.get(RegistryHandler.NECKLACE_MODIFIERS.get());
         String textureName = "";
         int model = 0;
         boolean hasBra = false;
-        int braColor = 16777215;
+        int braColor = -1;
         boolean hasGradient = false;
-        int gradientColor = 16777215;
+        int gradientColor = -1;
         boolean hasGlint = false;
         boolean permanent = false;
         if(component != null) {
@@ -42,12 +42,12 @@ public record TailStyle(ResourceLocation texture, int model, int tailColor, bool
             hasGlint = component.contains("glint");
             permanent = component.contains("permanent");
         }
-        int tailColor = DyedItemColor.getOrDefault(necklace, 16777215);
-        ResourceLocation texture = textureName.isEmpty() ? DEFAULT_TEXTURE : getTailLocation(textureName, tailColor != 16777215 || braColor != 16777215 || hasGradient);
+        int tailColor = DyedItemColor.getOrDefault(necklace, -1);
+        ResourceLocation texture = textureName.isEmpty() ? DEFAULT_TEXTURE : getTailLocation(textureName, tailColor != -1 || braColor != -1 || hasGradient);
         return new TailStyle(texture, model, tailColor, hasBra, braColor, hasGradient, gradientColor, hasGlint, permanent);
     }
     private static ResourceLocation getTailLocation(String name, boolean colorable) {
         String string = "textures/tail/" + name + (colorable ? "_colorable" : "") + ".png";
-        return TAIL_LOCATION_CACHE.computeIfAbsent(string, path -> new ResourceLocation(Mermod.MOD_ID, path));
+        return TAIL_LOCATION_CACHE.computeIfAbsent(string, path -> ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, path));
     }
 }
