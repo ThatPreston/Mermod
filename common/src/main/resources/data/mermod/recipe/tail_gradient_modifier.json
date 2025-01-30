@@ -6,7 +6,7 @@
     { "item": "minecraft:white_dye" }
   ],
   "result": {
-    "item": "mermod:tail_gradient_modifier",
+    "id": "mermod:tail_gradient_modifier",
     "count": 1
   }
 }

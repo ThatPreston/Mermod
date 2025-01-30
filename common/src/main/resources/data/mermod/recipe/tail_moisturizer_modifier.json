@@ -5,7 +5,7 @@
     { "item": "minecraft:potion" }
   ],
   "result": {
-    "item": "mermod:tail_moisturizer_modifier",
+    "id": "mermod:tail_moisturizer_modifier",
     "count": 1
   }
 }

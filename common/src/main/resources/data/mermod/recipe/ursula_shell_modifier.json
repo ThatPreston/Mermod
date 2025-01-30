@@ -5,7 +5,7 @@
     { "item": "minecraft:nautilus_shell" }
   ],
   "result": {
-    "item": "mermod:ursula_shell_modifier",
+    "id": "mermod:ursula_shell_modifier",
     "count": 1
   }
 }
