@@ -5,7 +5,7 @@
     { "item": "minecraft:glow_ink_sac" }
   ],
   "result": {
-    "item": "mermod:deep_sea_crystal_modifier",
+    "id": "mermod:deep_sea_crystal_modifier",
     "count": 1
   }
 }

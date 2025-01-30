@@ -5,7 +5,7 @@
     { "item": "minecraft:glowstone_dust" }
   ],
   "result": {
-    "item": "mermod:glowing_pearl_modifier",
+    "id": "mermod:glowing_pearl_modifier",
     "count": 1
   }
 }

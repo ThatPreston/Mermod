@@ -5,7 +5,7 @@
     { "item": "minecraft:diamond" }
   ],
   "result": {
-    "item": "mermod:sea_crystal",
+    "id": "mermod:sea_crystal",
     "count": 4
   }
 }
