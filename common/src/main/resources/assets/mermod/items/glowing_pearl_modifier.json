@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "mermod:item/glowing_pearl_modifier"
+  }
+}
