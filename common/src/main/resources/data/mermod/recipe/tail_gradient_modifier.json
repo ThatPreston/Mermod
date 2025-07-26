@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "mermod:sea_crystal" },
-    { "item": "minecraft:black_dye" },
-    { "item": "minecraft:white_dye" }
+    "mermod:sea_crystal",
+    "minecraft:black_dye",
+    "minecraft:white_dye"
   ],
   "result": {
-    "id": "mermod:tail_gradient_modifier",
-    "count": 1
+    "count": 1,
+    "id": "mermod:tail_gradient_modifier"
   }
 }

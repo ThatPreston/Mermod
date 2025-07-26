@@ -1,11 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "mermod:sea_crystal" },
-    { "item": "minecraft:potion" }
+    "mermod:sea_crystal",
+    "minecraft:potion"
   ],
   "result": {
-    "id": "mermod:tail_moisturizer_modifier",
-    "count": 1
+    "count": 1,
+    "id": "mermod:tail_moisturizer_modifier"
   }
 }

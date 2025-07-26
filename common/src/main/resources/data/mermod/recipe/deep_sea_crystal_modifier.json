@@ -1,11 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "mermod:sea_crystal" },
-    { "item": "minecraft:glow_ink_sac" }
+    "mermod:sea_crystal",
+    "minecraft:glow_ink_sac"
   ],
   "result": {
-    "id": "mermod:deep_sea_crystal_modifier",
-    "count": 1
+    "count": 1,
+    "id": "mermod:deep_sea_crystal_modifier"
   }
 }

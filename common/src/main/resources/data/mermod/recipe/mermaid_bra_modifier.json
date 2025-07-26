@@ -1,21 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "minecraft:kelp",
+    "B": "mermod:sea_crystal",
+    "C": "minecraft:string"
+  },
   "pattern": [
     " C ",
     "ABA"
   ],
-  "key": {
-    "A": {
-      "item": "minecraft:kelp"
-    },
-    "B": {
-      "item": "mermod:sea_crystal"
-    },
-    "C": {
-      "item": "minecraft:string"
-    }
-  },
   "result": {
+    "count": 1,
     "id": "mermod:mermaid_bra_modifier"
   }
 }

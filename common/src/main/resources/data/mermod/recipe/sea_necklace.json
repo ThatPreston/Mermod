@@ -1,19 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "minecraft:iron_ingot",
+    "B": "mermod:sea_crystal"
+  },
   "pattern": [
     " A ",
     "A A",
     " B "
   ],
-  "key": {
-    "A": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "mermod:sea_crystal"
-    }
-  },
   "result": {
+    "count": 1,
     "id": "mermod:sea_necklace"
   }
 }
