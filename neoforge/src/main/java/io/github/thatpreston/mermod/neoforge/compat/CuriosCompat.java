@@ -9,20 +9,22 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class CuriosCompat {
     public static ItemStack getNecklace(Player player) {
-        AtomicReference<ItemStack> necklace = new AtomicReference<>(ItemStack.EMPTY);
-        CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
-            Optional<SlotResult> result = inventory.findFirstCurio(RegistryHandler.SEA_NECKLACE.get());
-            result.ifPresent(slotResult -> necklace.set(slotResult.stack()));
-        });
-        return necklace.get();
+        ICuriosItemHandler handler = CuriosApi.getCuriosInventoryOrNull(player);
+        if(handler != null) {
+            Optional<SlotResult> result = handler.findFirstCurio(RegistryHandler.SEA_NECKLACE.get());
+            if(result.isPresent()) {
+                return result.get().stack();
+            }
+        }
+        return ItemStack.EMPTY;
     }
-    public static void registerCurio() {
+    public static void register() {
         CuriosApi.registerCurio(RegistryHandler.SEA_NECKLACE.get(), new ICurioItem() {
             @Override
             public void curioTick(SlotContext context, ItemStack stack) {

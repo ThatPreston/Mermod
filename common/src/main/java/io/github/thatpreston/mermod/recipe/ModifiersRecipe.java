@@ -14,8 +14,8 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NecklaceModifierRecipe extends CustomRecipe {
-    public NecklaceModifierRecipe(CraftingBookCategory category) {
+public class ModifiersRecipe extends CustomRecipe {
+    public ModifiersRecipe(CraftingBookCategory category) {
         super(category);
     }
     @Override
@@ -67,11 +67,7 @@ public class NecklaceModifierRecipe extends CustomRecipe {
         return ItemStack.EMPTY;
     }
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2;
-    }
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RegistryHandler.NECKLACE_MODIFIER_SERIALIZER.get();
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
+        return RegistryHandler.MODIFIERS_RECIPE_SERIALIZER.get();
     }
 }

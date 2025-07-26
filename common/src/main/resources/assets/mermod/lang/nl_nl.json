@@ -8,9 +8,10 @@
   "item.mermod.moon_rock_modifier": "Maan Steen",
   "item.mermod.ursula_shell_modifier": "Ursula's Schelp",
   "item.mermod.deep_sea_crystal_modifier": "Diep Zee Kristal",
-  "item.mermod.sea_necklace.tooltip": "Sluip en klik op rechts om modificaties te verwijderen",
-  "item.mermod.necklace_modifier.tooltip": "Kan worden gecombineerd met een Zee Ketting",
-  "item.mermod.dyeable_necklace_modifier.tooltip": "Kan worden geverfd of gecombineerd met een Zee Ketting",
-  "option.mermod.nightVisionFlashingFix": "Nacht Zicht Knipperend Oplossing",
+  "tooltip.mermod.modifiers": "Modifiers:",
+  "tooltip.mermod.remove_modifiers": "Sluip en klik op rechts om modificaties te verwijderen",
+  "tooltip.mermod.modifier": "Kan worden gecombineerd met een Zee Ketting",
+  "tooltip.mermod.dyeable_modifier": "Kan worden geverfd of gecombineerd met een Zee Ketting",
+  "option.mermod.disableNightVisionFlashing": "Nacht Zicht Knipperend Oplossing",
   "option.mermod.replaceSwimAnimation": "Vervanging Zwem Animatie"
 }

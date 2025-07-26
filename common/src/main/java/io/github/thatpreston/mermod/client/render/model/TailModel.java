@@ -1,19 +1,23 @@
 package io.github.thatpreston.mermod.client.render.model;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import io.github.thatpreston.mermod.client.render.PlayerRenderStateExtension;
 import io.github.thatpreston.mermod.client.render.TailStyle;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.ListModel;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.FastColor;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
 
-public class TailModel extends ListModel<Player> {
+public class TailModel extends EntityModel<PlayerRenderState> {
+    private static final BiConsumer<ModelPart, Float> SET_X = (part, value) -> part.xRot = value;
+    private static final BiConsumer<ModelPart, Float> SET_Z = (part, value) -> part.zRot = value;
+    private static final BiConsumer<ModelPart, Float> ADD_X = (part, value) -> part.xRot += value;
     private final ModelPart main;
     private final ModelPart bra;
     private final ModelPart waist;
@@ -25,7 +29,9 @@ public class TailModel extends ListModel<Player> {
     private final ModelPart tail6;
     private final ModelPart tail7;
     private final ModelPart fin;
+    private final ModelPart[] tailParts;
     public TailModel(ModelPart root) {
+        super(root);
         main = root.getChild("main");
         bra = main.getChild("bra");
         waist = main.getChild("waist");
@@ -37,46 +43,57 @@ public class TailModel extends ListModel<Player> {
         tail6 = tail5.getChild("tail6");
         tail7 = tail6.getChild("tail7");
         fin = tail7.getChild("fin");
+        tailParts = new ModelPart[]{tail1, tail2, tail3, tail4, tail5, tail6, tail7};
     }
-    @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of();
-    }
-    public void copyFrom(HumanoidModel<?> model) {
+    public void copyFrom(PlayerModel model) {
         main.copyFrom(model.body);
     }
-    public static float getAngle(float x, float speed, float scale) {
-        return Mth.sin(Mth.TWO_PI * x * speed) * scale;
+    public static float getWaveHeight(float pos, float speed, float scale) {
+        return Mth.sin(Mth.TWO_PI * pos * speed) * scale;
     }
-    public static float getAngleWithOffset(float x, float offset, float speed, float scale) {
-        return Mth.sin(Mth.TWO_PI * (x + offset * (1 / speed)) * speed) * scale;
+    public static float getWaveHeight(float pos, float offset, float speed, float scale) {
+        return Mth.sin(Mth.TWO_PI * (pos * speed + offset)) * scale;
+    }
+    private void animateWave(float pos, float speed, float scale, BiConsumer<ModelPart, Float> consumer) {
+        for(int index = 0; index < tailParts.length; index++) {
+            consumer.accept(tailParts[index], getWaveHeight(pos, -0.1F * index, speed, scale));
+        }
     }
     @Override
-    public void setupAnim(Player player, float limbSwing, float limbSwingAmount, float age, float yaw, float pitch) {
-        boolean crouching = player.isCrouching();
-        boolean swimming = player.isSwimming() || (player.isInWater() && !player.onGround() && !crouching);
-        if(player.getVehicle() != null) {
+    public void setupAnim(PlayerRenderState state) {
+        super.setupAnim(state);
+        PlayerRenderStateExtension extension = (PlayerRenderStateExtension)state;
+        float swimAmount = state.swimAmount;
+        if(state.isPassenger) {
             tail1.xRot = -Mth.PI / 2;
-            tail2.xRot = 0;
-            float x = Mth.PI / 150 * (Mth.sin(age / 12) + 3);
-            tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = x;
-            fin.xRot = x * 2;
-        } else if(swimming) {
-            float speed = 0.035F;
-            float scale = Mth.PI / 12;
-            tail1.xRot = getAngle(age, speed, scale);
-            tail2.xRot = getAngleWithOffset(age, -0.1F, speed, scale);
-            tail3.xRot = getAngleWithOffset(age, -0.2F, speed, scale);
-            tail4.xRot = getAngleWithOffset(age, -0.3F, speed, scale);
-            tail5.xRot = getAngleWithOffset(age, -0.4F, speed, scale);
-            tail6.xRot = getAngleWithOffset(age, -0.5F, speed, scale);
-            tail7.xRot = getAngleWithOffset(age, -0.6F, speed, scale);
-            fin.xRot = tail7.xRot * 2;
-        } else if(player.isVisuallySwimming()) {
-            tail1.xRot = tail2.xRot = tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = fin.xRot = 0;
+            tail2.xRot = tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = fin.xRot = Mth.PI / 90;
+            animateWave(state.ageInTicks, 0.01F, Mth.PI / 60, ADD_X);
+            fin.xRot = Mth.PI / 60;
+        } else if(extension.isOnGround()) {
+            float walkScale = Mth.PI / 24 * state.walkAnimationSpeed * (1 - swimAmount);
+            tail1.xRot = tail2.xRot = tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = fin.xRot = state.isCrouching ? Mth.PI / 16 : Mth.PI / 14;
+            animateWave(state.walkAnimationPos, 0.06F, walkScale, SET_Z);
         } else {
-            float angle = crouching ? Mth.PI / 16 : Mth.PI / 14;
-            tail1.xRot = tail2.xRot = tail3.xRot = tail4.xRot = tail5.xRot = tail6.xRot = tail7.xRot = fin.xRot = angle;
+            float idlePos = state.ageInTicks * 0.2F + state.walkAnimationPos * 0.6F;
+            if(!state.isFallFlying) {
+                tail1.xRot = tail2.xRot = tail3.xRot = tail4.xRot = tail5.xRot = Mth.PI / 16;
+                tail6.xRot = Mth.PI / 32;
+            }
+            animateWave(idlePos, 0.07F, Mth.PI / 20, ADD_X);
+            fin.xRot = tail7.xRot * 2;
+        }
+        if(swimAmount > 0) {
+            if(state.isInWater) {
+                float swimPos = state.ageInTicks * 0.2F + state.walkAnimationPos * 0.8F;
+                animateWave(swimPos, 0.035F, Mth.PI / 12, (part, value) -> part.xRot = Mth.lerp(swimAmount, part.xRot, value));
+                fin.xRot = Mth.lerp(swimAmount, fin.xRot, tail7.xRot * 2);
+            } else {
+                for(ModelPart part : tailParts) {
+                    part.xRot = Mth.lerp(swimAmount, part.xRot, 0);
+                }
+                fin.xRot = Mth.lerp(swimAmount, fin.xRot, 0);
+                animateWave(state.walkAnimationPos, 0.06F, Mth.PI / 32 * state.walkAnimationSpeed, SET_Z);
+            }
         }
     }
     public void render(PoseStack stack, VertexConsumer consumer, int light, int overlay, TailStyle style) {
@@ -95,7 +112,7 @@ public class TailModel extends ListModel<Player> {
                     color = gradientColor;
                 } else {
                     float alpha = i / 8.0F;
-                    color = FastColor.ARGB32.lerp(alpha, tailColor, gradientColor);
+                    color = ARGB.lerp(alpha, tailColor, gradientColor);
                     index.getAndIncrement();
                 }
             }

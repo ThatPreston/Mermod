@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mermod:item/necklace_0",
-    "layer1": "mermod:item/necklace_1"
+    "layer0": "mermod:item/necklace_1",
+    "layer1": "mermod:item/necklace_0"
   }
 }

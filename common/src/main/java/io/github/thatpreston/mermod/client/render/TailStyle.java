@@ -5,6 +5,7 @@ import io.github.thatpreston.mermod.item.modifier.NecklaceModifier;
 import io.github.thatpreston.mermod.item.modifier.NecklaceModifiers;
 import io.github.thatpreston.mermod.registry.RegistryHandler;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 
@@ -14,7 +15,7 @@ public record TailStyle(ResourceLocation texture, int model, int tailColor, bool
     public static final ResourceLocation DEFAULT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, "textures/tail/tail.png");
     private static final HashMap<String, ResourceLocation> TAIL_LOCATION_CACHE = new HashMap<>();
     public static TailStyle fromNecklace(ItemStack necklace) {
-        NecklaceModifiers component = necklace.get(RegistryHandler.NECKLACE_MODIFIERS.get());
+        NecklaceModifiers component = necklace.get(RegistryHandler.NECKLACE_MODIFIERS_COMPONENT_TYPE.get());
         String textureName = "";
         int model = 0;
         boolean hasBra = false;
@@ -33,11 +34,11 @@ public record TailStyle(ResourceLocation texture, int model, int tailColor, bool
             }
             if(bra != null) {
                 hasBra = true;
-                braColor = bra.color();
+                braColor = ARGB.opaque(bra.color());
             }
             if(gradient != null) {
                 hasGradient = true;
-                gradientColor = gradient.color();
+                gradientColor = ARGB.opaque(gradient.color());
             }
             hasGlint = component.contains("glint");
             permanent = component.contains("permanent");

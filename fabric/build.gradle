@@ -25,7 +25,7 @@ dependencies {
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-    modImplementation "dev.emi:trinkets:${rootProject.trinkets_version}"
+    modImplementation "io.wispforest:accessories-fabric:${project.accessories_version}"
     modImplementation "org.figuramc:figura-fabric:${rootProject.figura_version}"
     implementation "com.github.FiguraMC.luaj:luaj-core:${rootProject.luaj_version}-figura"
     implementation "com.github.FiguraMC.luaj:luaj-jse:${rootProject.luaj_version}-figura"

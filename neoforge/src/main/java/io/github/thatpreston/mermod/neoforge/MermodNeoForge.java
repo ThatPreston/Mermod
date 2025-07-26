@@ -14,16 +14,17 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 public class MermodNeoForge {
     public static boolean curiosLoaded;
     public MermodNeoForge(IEventBus eventBus, ModContainer container) {
+        curiosLoaded = ModList.get().isLoaded("curios");
+        Mermod.init();
         eventBus.addListener(this::commonSetup);
         container.registerConfig(ModConfig.Type.SERVER, MermodConfig.SERVER_SPEC);
         container.registerConfig(ModConfig.Type.CLIENT, MermodConfig.CLIENT_SPEC);
-        curiosLoaded = ModList.get().isLoaded("curios");
-        Mermod.init();
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(Mermod::registerCauldronInteractions);
+        Mermod.commonSetup();
         if(curiosLoaded) {
-            CuriosCompat.registerCurio();
+            CuriosCompat.register();
         }
+        event.enqueueWork(Mermod::registerCauldronInteractions);
     }
 }

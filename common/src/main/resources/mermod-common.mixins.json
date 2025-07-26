@@ -4,12 +4,13 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "LivingEntityMixin"
   ],
   "client": [
     "HumanoidArmorLayerMixin",
     "HumanoidModelMixin",
     "PlayerRendererMixin",
+    "PlayerModelMixin",
+    "PlayerRenderStateMixin",
     "GameRendererMixin"
   ],
   "injectors": {

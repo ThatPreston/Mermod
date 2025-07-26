@@ -8,9 +8,10 @@
   "item.mermod.moon_rock_modifier": "月之石",
   "item.mermod.ursula_shell_modifier": "烏蘇拉之貝",
   "item.mermod.deep_sea_crystal_modifier": "深海晶體",
-  "item.mermod.sea_necklace.tooltip": "蹲下右鍵以移除裝飾",
-  "item.mermod.necklace_modifier.tooltip": "可和項鍊組合",
-  "item.mermod.dyeable_necklace_modifier.tooltip": "可染色/可和項鍊組合",
-  "option.mermod.nightVisionFlashingFix": "夜視閃爍關閉",
+  "tooltip.mermod.modifiers": "Modifiers:",
+  "tooltip.mermod.remove_modifiers": "蹲下右鍵以移除裝飾",
+  "tooltip.mermod.modifier": "可和項鍊組合",
+  "tooltip.mermod.dyeable_modifier": "可染色/可和項鍊組合",
+  "option.mermod.disableNightVisionFlashing": "夜視閃爍關閉",
   "option.mermod.replaceSwimAnimation": "替換游泳動畫"
 }

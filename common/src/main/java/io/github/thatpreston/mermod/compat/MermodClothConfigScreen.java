@@ -12,10 +12,10 @@ public class MermodClothConfigScreen {
         ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent);
         ConfigCategory category = builder.getOrCreateCategory(Component.empty());
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        category.addEntry(entryBuilder.startBooleanToggle(Component.translatable("option.mermod.nightVisionFlashingFix"), MermodConfig.getNightVisionFlashingFix())
-                .setDefaultValue(true).setSaveConsumer(MermodConfig::setNightVisionFlashingFix).build());
-        category.addEntry(entryBuilder.startBooleanToggle(Component.translatable("option.mermod.replaceSwimAnimation"), MermodConfig.getReplaceSwimAnimation())
-                .setDefaultValue(true).setSaveConsumer(MermodConfig::setReplaceSwimAnimation).build());
+        category.addEntry(entryBuilder.startBooleanToggle(Component.translatable("option.mermod.disableNightVisionFlashing"), MermodConfig.shouldDisableNightVisionFlashing())
+                .setDefaultValue(true).setSaveConsumer(MermodConfig.CLIENT.disableNightVisionFlashing::set).build());
+        category.addEntry(entryBuilder.startBooleanToggle(Component.translatable("option.mermod.replaceSwimAnimation"), MermodConfig.shouldReplaceSwimAnimation())
+                .setDefaultValue(true).setSaveConsumer(MermodConfig.CLIENT.replaceSwimAnimation::set).build());
         return builder.build();
     }
 }

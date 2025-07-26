@@ -3,6 +3,7 @@ package io.github.thatpreston.mermod.mixin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.github.thatpreston.mermod.MermodClient;
+import io.github.thatpreston.mermod.client.render.PlayerRenderStateExtension;
 import io.github.thatpreston.mermod.client.render.model.TailModel;
 import io.github.thatpreston.mermod.config.MermodConfig;
 import net.minecraft.client.model.PlayerModel;
@@ -10,6 +11,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,35 +19,31 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
-public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    public PlayerRendererMixin(EntityRendererProvider.Context context, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
+public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
+    public PlayerRendererMixin(EntityRendererProvider.Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
-    @Inject(method = "setupRotations(Lnet/minecraft/client/player/AbstractClientPlayer;Lcom/mojang/blaze3d/vertex/PoseStack;FFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;setupRotations(Lnet/minecraft/world/entity/LivingEntity;Lcom/mojang/blaze3d/vertex/PoseStack;FFFF)V", shift = At.Shift.AFTER, ordinal = 1), cancellable = true)
-    private void onSetupRotations(AbstractClientPlayer player, PoseStack stack, float age, float yaw, float partialTicks, float i, CallbackInfo info) {
-        if(MermodConfig.getReplaceSwimAnimation()) {
-            if(MermodClient.shouldRenderTail(player)) {
-                float swimAmount = player.getSwimAmount(partialTicks);
-                float swimAngle = player.isInWater() ? -90 - player.getViewXRot(partialTicks) : -90;
-                if(player.isInWater()) {
-                    swimAngle += TailModel.getAngleWithOffset(age, -0.1F, 0.035F, 10) + 6;
+    @Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V", at = @At("TAIL"))
+    private void onExtractRenderState(AbstractClientPlayer player, PlayerRenderState state, float partialTicks, CallbackInfo info) {
+        PlayerRenderStateExtension extension = (PlayerRenderStateExtension)state;
+        extension.setTailStyle(MermodClient.getRenderedTailStyle(player));
+        extension.setOnGround(player.onGround());
+    }
+    @Inject(method = "setupRotations(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;setupRotations(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V", shift = At.Shift.AFTER, ordinal = 1), cancellable = true)
+    private void onSetupRotations(PlayerRenderState state, PoseStack stack, float f, float g, CallbackInfo info) {
+        if(MermodConfig.shouldReplaceSwimAnimation()) {
+            if(state instanceof PlayerRenderStateExtension extension && extension.getTailStyle() != null) {
+                float swimAngle = state.isInWater ? -90 - state.xRot : -90;
+                if(state.isInWater) {
+                    float pos = state.ageInTicks * 0.2F + state.walkAnimationPos * 0.8F;
+                    swimAngle += TailModel.getWaveHeight(pos, -0.1F, 0.035F, 10) + 6;
                 }
-                stack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(swimAmount, 0, swimAngle)));
-                if(player.isVisuallySwimming()) {
+                stack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(state.swimAmount, 0, swimAngle)));
+                if(state.isVisuallySwimming) {
                     stack.translate(0, -1, 0.3F);
                 }
                 info.cancel();
             }
-        }
-    }
-    @Inject(method = "setModelProperties(Lnet/minecraft/client/player/AbstractClientPlayer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/AbstractClientPlayer;isCrouching()Z", shift = At.Shift.AFTER))
-    private void onSetModelProperties(AbstractClientPlayer player, CallbackInfo info) {
-        if(MermodClient.shouldRenderTail(player)) {
-            PlayerModel<AbstractClientPlayer> model = this.getModel();
-            model.rightLeg.visible = false;
-            model.rightPants.visible = false;
-            model.leftLeg.visible = false;
-            model.leftPants.visible = false;
         }
     }
 }
