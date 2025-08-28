@@ -8,7 +8,6 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -36,7 +35,7 @@ public class TailRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel>
                 stack.pushPose();
                 model.setupAnim(state);
                 model.copyFrom(this.getParentModel());
-                VertexConsumer consumer = ItemRenderer.getFoilBuffer(source, RenderType.itemEntityTranslucentCull(style.texture()), false, style.hasGlint());
+                VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(source, MermodRenderTypes.armorTranslucentCull(style.texture()), style.hasGlint());
                 model.render(stack, consumer, light, OverlayTexture.NO_OVERLAY, style);
                 stack.popPose();
             }
