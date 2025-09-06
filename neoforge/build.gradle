@@ -30,6 +30,7 @@ dependencies {
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
     modImplementation "top.theillusivec4.curios:curios-neoforge:$rootProject.curios_version"
     modImplementation "io.wispforest:accessories-neoforge:$rootProject.accessories_version"
+    modImplementation "io.wispforest:owo-lib-neoforge:$rootProject.owo_neoforge_version"
     forgeRuntimeLibrary "blue.endless:jankson:1.2.2"
     forgeRuntimeLibrary "io.wispforest:endec:0.1.9"
     forgeRuntimeLibrary "io.wispforest.endec:gson:0.1.6"
