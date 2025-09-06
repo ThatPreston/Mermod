@@ -1,4 +1,4 @@
-package io.github.thatpreston.mermod.mixin;
+package io.github.thatpreston.mermod.neoforge.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.thatpreston.mermod.MermodClient;
@@ -23,8 +23,8 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
     public HumanoidArmorLayerMixin(RenderLayerParent<T, M> parent) {
         super(parent);
     }
-    @Inject(method = "renderArmorPiece(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;)V", at = @At("HEAD"), cancellable = true)
-    private void onRenderArmorPiece(PoseStack stack, MultiBufferSource source, T entity, EquipmentSlot slot, int i, A model, CallbackInfo info) {
+    @Inject(method = "renderArmorPiece(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;FFFFFF)V", at = @At("HEAD"), cancellable = true)
+    private void onRenderArmorPiece(PoseStack stack, MultiBufferSource source, T entity, EquipmentSlot slot, int i, A model, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, CallbackInfo info) {
         if(entity instanceof Player player) {
             TailStyle style = MermodClient.getRenderedTailStyle(player);
             if(style != null) {

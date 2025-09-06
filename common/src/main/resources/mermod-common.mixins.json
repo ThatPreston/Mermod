@@ -7,7 +7,6 @@
     "LivingEntityMixin"
   ],
   "client": [
-    "HumanoidArmorLayerMixin",
     "HumanoidModelMixin",
     "PlayerRendererMixin",
     "GameRendererMixin"

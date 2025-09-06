@@ -5,10 +5,11 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "PlayerMixin",
-    "AvatarMixin"
+    "PlayerMixin"
   ],
   "client": [
+    "HumanoidArmorLayerMixin",
+    "AvatarMixin"
   ],
   "injectors": {
     "defaultRequire": 1
