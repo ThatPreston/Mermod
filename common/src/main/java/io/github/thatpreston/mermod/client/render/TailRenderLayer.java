@@ -31,18 +31,20 @@ public class TailRenderLayer<T extends Player, M extends HumanoidModel<T>> exten
         TailStyle style = MermodClient.getRenderedTailStyle(entity);
         if(style != null) {
             TailModel model = getModel(style.model());
-            stack.pushPose();
-            VertexConsumer consumer = ItemRenderer.getFoilBufferDirect(source, RenderType.entityTranslucentCull(style.texture()), false, style.hasGlint());
-            model.copyFrom(this.getParentModel());
-            model.setupAnim(entity, limbSwing, limbSwingAmount, age, yaw, pitch);
-            model.render(stack, consumer, light, OverlayTexture.NO_OVERLAY, style);
-            stack.popPose();
+            if(model != null) {
+                stack.pushPose();
+                VertexConsumer consumer = ItemRenderer.getFoilBufferDirect(source, RenderType.entityTranslucentCull(style.texture()), false, style.hasGlint());
+                model.copyFrom(this.getParentModel());
+                model.setupAnim(entity, limbSwing, limbSwingAmount, partialTicks, age, yaw, pitch);
+                model.render(stack, consumer, light, OverlayTexture.NO_OVERLAY, style);
+                stack.popPose();
+            }
         }
     }
     private TailModel getModel(int model) {
         if(model >= 0 && model < models.size()) {
             return models.get(model);
         }
-        return models.get(0);
+        return null;
     }
 }
