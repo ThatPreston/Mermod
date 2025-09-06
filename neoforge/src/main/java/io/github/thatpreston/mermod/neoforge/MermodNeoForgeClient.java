@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-@EventBusSubscriber(modid = Mermod.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Mermod.MOD_ID, value = Dist.CLIENT)
 public class MermodNeoForgeClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
