@@ -23,7 +23,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     }
     @Inject(method = "setupRotations(Lnet/minecraft/client/player/AbstractClientPlayer;Lcom/mojang/blaze3d/vertex/PoseStack;FFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;setupRotations(Lnet/minecraft/world/entity/LivingEntity;Lcom/mojang/blaze3d/vertex/PoseStack;FFFF)V", shift = At.Shift.AFTER, ordinal = 1), cancellable = true)
     private void onSetupRotations(AbstractClientPlayer player, PoseStack stack, float age, float yaw, float partialTicks, float i, CallbackInfo info) {
-        if(MermodConfig.getReplaceSwimAnimation()) {
+        if(MermodConfig.shouldReplaceSwimAnimation()) {
             if(MermodClient.shouldRenderTail(player)) {
                 float swimAmount = player.getSwimAmount(partialTicks);
                 float swimAngle = player.isInWater() ? -90 - player.getViewXRot(partialTicks) : -90;

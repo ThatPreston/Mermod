@@ -53,10 +53,10 @@ public class Mermod {
     }
     public static void addEffects(LivingEntity entity) {
         if(entity.isInWater()) {
-            if(MermodConfig.getWaterBreathing() && !entity.hasEffect(MobEffects.WATER_BREATHING)) {
+            if(MermodConfig.isWaterBreathingEnabled() && !entity.hasEffect(MobEffects.WATER_BREATHING)) {
                 entity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 200, 0, true, false));
             }
-            if(MermodConfig.getNightVision() && !entity.hasEffect(MobEffects.NIGHT_VISION)) {
+            if(MermodConfig.isNightVisionEnabled() && !entity.hasEffect(MobEffects.NIGHT_VISION)) {
                 entity.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 200, 0, true, false));
             }
         }

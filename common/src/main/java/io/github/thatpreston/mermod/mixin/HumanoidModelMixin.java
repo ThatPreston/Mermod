@@ -31,7 +31,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
     protected abstract float rotlerpRad(float f, float g, float h);
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HumanoidModel;getAttackArm(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/HumanoidArm;", shift = At.Shift.AFTER), cancellable = true)
     private void onSetupAnim(T entity, float limbSwing, float limbSwingAmount, float age, float yaw, float pitch, CallbackInfo info) {
-        if(MermodConfig.getReplaceSwimAnimation() && entity.isInWater()) {
+        if(MermodConfig.shouldReplaceSwimAnimation() && entity.isInWater()) {
             if(entity instanceof Player player && MermodClient.shouldRenderTail(player)) {
                 HumanoidArm arm = this.getAttackArm(entity);
                 float right = arm == HumanoidArm.RIGHT && this.attackTime > 0 ? 0 : this.swimAmount;
