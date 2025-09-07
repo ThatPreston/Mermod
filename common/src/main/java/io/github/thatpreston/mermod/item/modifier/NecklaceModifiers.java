@@ -27,7 +27,7 @@ public record NecklaceModifiers(Map<String, NecklaceModifier> modifiers) {
         NecklaceModifier modifier = modifiers.remove(item.getType());
         if(modifier != null) {
             ItemStack stack = item.getDefaultInstance();
-            if(stack.is(ItemTags.DYEABLE)) {
+            if(stack.is(ItemTags.DYEABLE) && modifier.color() != 16777215) {
                 stack.set(DataComponents.DYED_COLOR, new DyedItemColor(modifier.color(), true));
             }
             return stack;

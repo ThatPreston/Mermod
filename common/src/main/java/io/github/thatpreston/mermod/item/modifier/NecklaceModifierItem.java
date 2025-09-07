@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NecklaceModifierItem extends Item {
-    private static final Component MODIFIER_TOOLTIP = Component.translatable("item.mermod.necklace_modifier.tooltip").withStyle(ChatFormatting.GRAY);
-    private static final Component DYEABLE_MODIFIER_TOOLTIP = Component.translatable("item.mermod.dyeable_necklace_modifier.tooltip").withStyle(ChatFormatting.GRAY);
+    private static final Component MODIFIER_TOOLTIP = Component.translatable("tooltip.mermod.modifier").withStyle(ChatFormatting.GRAY);
+    private static final Component DYEABLE_MODIFIER_TOOLTIP = Component.translatable("tooltip.mermod.dyeable_modifier").withStyle(ChatFormatting.GRAY);
     public static final List<NecklaceModifierItem> MODIFIERS = new ArrayList<>();
     private final String type;
     private final NecklaceModifier modifier;
