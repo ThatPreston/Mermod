@@ -5,6 +5,7 @@ import io.github.thatpreston.mermod.item.modifier.NecklaceModifier;
 import io.github.thatpreston.mermod.item.modifier.NecklaceModifiers;
 import io.github.thatpreston.mermod.registry.RegistryHandler;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 
@@ -33,11 +34,11 @@ public record TailStyle(ResourceLocation texture, int model, int tailColor, bool
             }
             if(bra != null) {
                 hasBra = true;
-                braColor = bra.color();
+                braColor = FastColor.ARGB32.opaque(bra.color());
             }
             if(gradient != null) {
                 hasGradient = true;
-                gradientColor = gradient.color();
+                gradientColor = FastColor.ARGB32.opaque(gradient.color());
             }
             hasGlint = component.contains("glint");
             permanent = component.contains("permanent");
