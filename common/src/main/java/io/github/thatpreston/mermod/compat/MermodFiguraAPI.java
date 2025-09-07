@@ -1,6 +1,6 @@
 package io.github.thatpreston.mermod.compat;
 
-import io.github.thatpreston.mermod.Mermod;
+import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -48,7 +48,7 @@ public class MermodFiguraAPI implements FiguraAPI {
     public LuaValue getTailStyle() {
         Entity entity = avatar.luaRuntime.getUser();
         if(entity instanceof Player player) {
-            TailStyle style = Mermod.getTailStyle(player);
+            TailStyle style = MermodClient.getTailStyle(player);
             if(style != null) {
                 LuaTable table = new LuaTable();
                 table.set("texture", LuaValue.valueOf(style.texture().toString()));
