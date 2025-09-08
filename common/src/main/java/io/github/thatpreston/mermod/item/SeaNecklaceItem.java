@@ -1,6 +1,5 @@
 package io.github.thatpreston.mermod.item;
 
-import dev.architectury.extensions.ItemExtension;
 import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.item.modifier.NecklaceModifier;
 import io.github.thatpreston.mermod.item.modifier.NecklaceModifierItem;
@@ -11,20 +10,26 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
-public class SeaNecklaceItem extends Item implements ItemExtension {
+public class SeaNecklaceItem extends Item {
     private static final Component MODIFIERS_TOOLTIP = Component.translatable("tooltip.mermod.modifiers").withStyle(ChatFormatting.GRAY);
     private static final Component REMOVE_MODIFIERS_TOOLTIP = Component.translatable("tooltip.mermod.remove_modifiers").withStyle(ChatFormatting.GRAY);
     public SeaNecklaceItem(Item.Properties properties) {
@@ -45,12 +50,10 @@ public class SeaNecklaceItem extends Item implements ItemExtension {
         return super.use(level, player, hand);
     }
     @Override
-    public EquipmentSlot getCustomEquipmentSlot(ItemStack stack) {
-        return EquipmentSlot.CHEST;
-    }
-    @Override
-    public void tickArmor(ItemStack stack, Player player) {
-        Mermod.addEffects(player);
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+        if(entity instanceof LivingEntity livingEntity && slot == EquipmentSlot.CHEST) {
+            Mermod.addEffects(livingEntity);
+        }
     }
     public static void addModifiers(ItemStack necklace, List<ItemStack> list) {
         NecklaceModifiers modifiers = necklace.getOrDefault(RegistryHandler.NECKLACE_MODIFIERS_COMPONENT_TYPE.get(), NecklaceModifiers.EMPTY).copy();
@@ -96,17 +99,17 @@ public class SeaNecklaceItem extends Item implements ItemExtension {
         return ItemStack.EMPTY;
     }
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
         NecklaceModifiers component = stack.get(RegistryHandler.NECKLACE_MODIFIERS_COMPONENT_TYPE.get());
         if(component != null) {
             Map<String, NecklaceModifier> modifiers = component.modifiers();
             if(!modifiers.isEmpty()) {
-                list.add(CommonComponents.EMPTY);
-                list.add(MODIFIERS_TOOLTIP);
+                consumer.accept(CommonComponents.EMPTY);
+                consumer.accept(MODIFIERS_TOOLTIP);
                 for(NecklaceModifier modifier : modifiers.values()) {
-                    list.add(Component.literal(" ").append(Component.translatable("item.mermod." + modifier.id() + "_modifier").withStyle(Style.EMPTY.withColor(modifier.color()))));
+                    consumer.accept(Component.literal(" ").append(Component.translatable("item.mermod." + modifier.id() + "_modifier").withStyle(Style.EMPTY.withColor(modifier.color()))));
                 }
-                list.add(REMOVE_MODIFIERS_TOOLTIP);
+                consumer.accept(REMOVE_MODIFIERS_TOOLTIP);
             }
         }
     }

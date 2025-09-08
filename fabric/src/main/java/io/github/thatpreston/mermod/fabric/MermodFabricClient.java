@@ -1,9 +1,11 @@
 package io.github.thatpreston.mermod.fabric;
 
 import io.github.thatpreston.mermod.MermodClient;
+import io.github.thatpreston.mermod.client.render.MermodRenderTypes;
 import io.github.thatpreston.mermod.client.render.TailRenderLayer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 
 public class MermodFabricClient implements ClientModInitializer {
@@ -15,5 +17,6 @@ public class MermodFabricClient implements ClientModInitializer {
                 registrationHelper.register(new TailRenderLayer(playerRenderer, context.getModelSet()));
             }
         });
+        RenderPipelines.register(MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
     }
 }

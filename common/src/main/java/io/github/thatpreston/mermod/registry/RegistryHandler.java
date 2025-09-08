@@ -12,6 +12,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -22,7 +23,7 @@ import java.util.function.UnaryOperator;
 
 public class RegistryHandler {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Mermod.MOD_ID, Registries.ITEM);
-    public static final RegistrySupplier<Item> SEA_NECKLACE = registerItem("sea_necklace", key -> new SeaNecklaceItem(new Item.Properties().setId(key).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).stacksTo(1)));
+    public static final RegistrySupplier<Item> SEA_NECKLACE = registerItem("sea_necklace", key -> new SeaNecklaceItem(new Item.Properties().setId(key).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).stacksTo(1).equippable(EquipmentSlot.CHEST)));
     public static final RegistrySupplier<Item> SEA_CRYSTAL = registerItem("sea_crystal", key -> new Item(new Item.Properties().setId(key).arch$tab(CreativeModeTabs.INGREDIENTS)));
     public static final RegistrySupplier<Item> MERMAID_BRA_MODIFIER = registerModifierItem("bra", new NecklaceModifier("mermaid_bra", 0));
     public static final RegistrySupplier<Item> GLOWING_PEARL_MODIFIER = registerModifierItem("glint", new NecklaceModifier("glowing_pearl", 16777060));

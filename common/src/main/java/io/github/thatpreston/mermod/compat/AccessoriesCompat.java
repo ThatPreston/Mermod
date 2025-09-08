@@ -3,9 +3,9 @@ package io.github.thatpreston.mermod.compat;
 import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.registry.RegistryHandler;
 import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.Accessory;
-import io.wispforest.accessories.api.AccessoryRegistry;
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
+import io.wispforest.accessories.api.core.Accessory;
+import io.wispforest.accessories.api.core.AccessoryRegistry;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
 import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.world.entity.player.Player;
@@ -31,6 +31,6 @@ public class AccessoriesCompat {
         });
     }
     public static void registerRenderer() {
-        AccessoriesRendererRegistry.registerNoRenderer(RegistryHandler.SEA_NECKLACE.get());
+        AccessoriesRendererRegistry.bindItemToRenderer(RegistryHandler.SEA_NECKLACE.get(), AccessoriesRendererRegistry.NO_RENDERER_ID);
     }
 }
