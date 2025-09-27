@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.thatpreston.mermod.client.render.PlayerRenderStateExtension;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.util.ARGB;
@@ -18,7 +17,7 @@ public class TailModel extends EntityModel<PlayerRenderState> {
     private static final BiConsumer<ModelPart, Float> SET_X = (part, value) -> part.xRot = value;
     private static final BiConsumer<ModelPart, Float> SET_Z = (part, value) -> part.zRot = value;
     private static final BiConsumer<ModelPart, Float> ADD_X = (part, value) -> part.xRot += value;
-    private final ModelPart main;
+    public final ModelPart main;
     private final ModelPart bra;
     private final ModelPart waist;
     private final ModelPart tail1;
@@ -44,9 +43,6 @@ public class TailModel extends EntityModel<PlayerRenderState> {
         tail7 = tail6.getChild("tail7");
         fin = tail7.getChild("fin");
         tailParts = new ModelPart[]{tail1, tail2, tail3, tail4, tail5, tail6, tail7};
-    }
-    public void copyFrom(PlayerModel model) {
-        main.copyFrom(model.body);
     }
     public static float getWaveHeight(float pos, float speed, float scale) {
         return Mth.sin(Mth.TWO_PI * pos * speed) * scale;
@@ -99,7 +95,6 @@ public class TailModel extends EntityModel<PlayerRenderState> {
     public void render(PoseStack stack, VertexConsumer consumer, int light, int overlay, TailStyle style) {
         int tailColor = style.tailColor();
         int gradientColor = style.gradientColor();
-        this.main.translateAndRotate(stack);
         if(style.hasBra()) {
             this.bra.render(stack, consumer, light, overlay, style.braColor());
         }

@@ -30,5 +30,6 @@ public class MermodNeoForgeClient {
     @SubscribeEvent
     public static void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
         event.registerPipeline(MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
+        event.registerPipeline(MermodRenderTypes.GLINT_CULL_PIPELINE);
     }
 }

@@ -2,17 +2,18 @@ package io.github.thatpreston.mermod.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.model.TailModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,14 @@ public class TailRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel>
             if(model != null) {
                 stack.pushPose();
                 model.setupAnim(state);
-                model.copyFrom(this.getParentModel());
-                VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(source, MermodRenderTypes.armorTranslucentCull(style.texture()), style.hasGlint());
+                model.main.copyFrom(this.getParentModel().body);
+                model.main.translateAndRotate(stack);
+                VertexConsumer consumer = source.getBuffer(MermodRenderTypes.armorTranslucentCull(style.texture()));
                 model.render(stack, consumer, light, OverlayTexture.NO_OVERLAY, style);
+                if(style.hasGlint()) {
+                    VertexConsumer glintConsumer = source.getBuffer(MermodRenderTypes.armorEntityGlintCull());
+                    model.render(stack, glintConsumer, light, OverlayTexture.NO_OVERLAY, style);
+                }
                 stack.popPose();
             }
         }

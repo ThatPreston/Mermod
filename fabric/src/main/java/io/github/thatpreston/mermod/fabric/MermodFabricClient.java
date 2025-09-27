@@ -18,5 +18,6 @@ public class MermodFabricClient implements ClientModInitializer {
             }
         });
         RenderPipelines.register(MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
+        RenderPipelines.register(MermodRenderTypes.GLINT_CULL_PIPELINE);
     }
 }
