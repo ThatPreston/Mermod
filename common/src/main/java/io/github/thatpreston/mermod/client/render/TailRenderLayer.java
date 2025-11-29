@@ -2,7 +2,6 @@ package io.github.thatpreston.mermod.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.model.TailModel;
 import net.minecraft.client.model.PlayerModel;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
