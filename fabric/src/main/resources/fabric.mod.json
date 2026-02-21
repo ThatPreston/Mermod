@@ -39,6 +39,6 @@
   "depends": {
     "fabric": "*",
     "minecraft": ">=${minecraft_version}",
-    "architectury": ">=${architectury_version}"
+    "architectury": ">=${architectury_api_version}"
   }
 }

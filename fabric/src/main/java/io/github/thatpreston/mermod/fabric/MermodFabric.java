@@ -2,9 +2,9 @@ package io.github.thatpreston.mermod.fabric;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import io.github.thatpreston.mermod.Mermod;
+import io.github.thatpreston.mermod.compat.origins.OriginsCompat;
 import io.github.thatpreston.mermod.config.MermodConfig;
 import io.github.thatpreston.mermod.fabric.compat.TrinketsCompat;
-import io.github.thatpreston.mermod.fabric.compat.origins.OriginsCompat;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraftforge.fml.config.ModConfig;
