@@ -4,6 +4,7 @@ plugins {
 
 loom {
     forge {
+        mixinConfig "mermod-common.mixins.json"
         mixinConfig "mermod.mixins.json"
     }
 }
