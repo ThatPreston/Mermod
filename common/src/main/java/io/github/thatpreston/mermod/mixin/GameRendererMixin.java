@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class GameRendererMixin {
     @Inject(method = "getNightVisionScale(Lnet/minecraft/world/entity/LivingEntity;F)F", at = @At("HEAD"), cancellable = true)
     private static void onGetNightVisionScale(LivingEntity entity, float f, CallbackInfoReturnable<Float> info) {
-        if(entity.hasEffect(MobEffects.NIGHT_VISION) && MermodConfig.getNightVisionFlashingFix()) {
+        if(entity.hasEffect(MobEffects.NIGHT_VISION) && MermodConfig.shouldDisableNightVisionFlashing()) {
             info.setReturnValue(1.0F);
         }
     }

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class EnchantmentHelperMixin {
     @ModifyReturnValue(method = "hasAquaAffinity(Lnet/minecraft/world/entity/LivingEntity;)Z", at = @At("RETURN"))
     private static boolean hasNecklaceAquaAffinity(boolean original, LivingEntity entity) {
-        if(!original && MermodConfig.getAquaAffinity() && entity instanceof Player player) {
+        if(!original && MermodConfig.isAquaAffinityEnabled() && entity instanceof Player player) {
             ItemStack necklace = Mermod.getNecklace(player);
             return !necklace.isEmpty();
         }

@@ -2,7 +2,6 @@ package io.github.thatpreston.mermod.fabric;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import io.github.thatpreston.mermod.Mermod;
-import io.github.thatpreston.mermod.compat.origins.OriginsCompat;
 import io.github.thatpreston.mermod.config.MermodConfig;
 import io.github.thatpreston.mermod.fabric.compat.TrinketsCompat;
 import net.fabricmc.api.ModInitializer;
@@ -18,9 +17,6 @@ public class MermodFabric implements ModInitializer {
         trinketsLoaded = loader.isModLoaded("trinkets");
         if(trinketsLoaded) {
             TrinketsCompat.init();
-        }
-        if(Mermod.originsLoaded) {
-            OriginsCompat.registerPowerFactory();
         }
         ForgeConfigRegistry.INSTANCE.register(Mermod.MOD_ID, ModConfig.Type.SERVER, MermodConfig.SERVER_SPEC);
         ForgeConfigRegistry.INSTANCE.register(Mermod.MOD_ID, ModConfig.Type.CLIENT, MermodConfig.CLIENT_SPEC);

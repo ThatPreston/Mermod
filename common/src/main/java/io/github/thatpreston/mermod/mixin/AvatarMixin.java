@@ -16,6 +16,6 @@ public abstract class AvatarMixin {
     @Shadow @Final public UUID owner;
     @Inject(method = "clean()V", at = @At("HEAD"), remap = false)
     private void onClean(CallbackInfo info) {
-        MermodFiguraAPI.TAIL_VISIBLE.remove(this.owner);
+        MermodFiguraAPI.resetVisible(this.owner);
     }
 }

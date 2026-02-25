@@ -23,19 +23,19 @@ public class MermodConfig {
         public ForgeConfigSpec.BooleanValue aquaAffinity;
         Server(ForgeConfigSpec.Builder builder) {
             builder.push("Server");
-            swimSpeedMultiplier = builder.comment("Swim speed multiplier").defineInRange("swimSpeedMultiplier", 2.0D, 1.0D, 10.0D);
+            swimSpeedMultiplier = builder.comment("Swim speed multiplier").defineInRange("swimSpeedMultiplier", 1.5D, 1.0D, 10.0D);
             waterBreathing = builder.comment("Water breathing").define("waterBreathing", true);
             nightVision = builder.comment("Night vision").define("nightVision", true);
-            aquaAffinity = builder.comment("Aqua affinity").define("aquaAffinity", true);
+            aquaAffinity = builder.comment("Aqua affinity (underwater mining speed)").define("aquaAffinity", true);
             builder.pop();
         }
     }
     public static class Client {
-        public ForgeConfigSpec.BooleanValue nightVisionFlashingFix;
+        public ForgeConfigSpec.BooleanValue disableNightVisionFlashing;
         public ForgeConfigSpec.BooleanValue replaceSwimAnimation;
         Client(ForgeConfigSpec.Builder builder) {
             builder.push("Client");
-            nightVisionFlashingFix = builder.comment("Night vision flashing fix").define("nightVisionFlashingFix", true);
+            disableNightVisionFlashing = builder.comment("Disable night vision flashing").define("disableNightVisionFlashing", true);
             replaceSwimAnimation = builder.comment("Replace swim animation").define("replaceSwimAnimation", true);
             builder.pop();
         }
@@ -43,25 +43,19 @@ public class MermodConfig {
     public static double getSwimSpeedMultiplier() {
         return SERVER.swimSpeedMultiplier.get();
     }
-    public static boolean getWaterBreathing() {
+    public static boolean isWaterBreathingEnabled() {
         return SERVER.waterBreathing.get();
     }
-    public static boolean getNightVision() {
+    public static boolean isNightVisionEnabled() {
         return SERVER.nightVision.get();
     }
-    public static boolean getAquaAffinity() {
+    public static boolean isAquaAffinityEnabled() {
         return SERVER.aquaAffinity.get();
     }
-    public static boolean getNightVisionFlashingFix() {
-        return CLIENT.nightVisionFlashingFix.get();
+    public static boolean shouldDisableNightVisionFlashing() {
+        return CLIENT.disableNightVisionFlashing.get();
     }
-    public static boolean getReplaceSwimAnimation() {
+    public static boolean shouldReplaceSwimAnimation() {
         return CLIENT.replaceSwimAnimation.get();
-    }
-    public static void setNightVisionFlashingFix(boolean value) {
-        CLIENT.nightVisionFlashingFix.set(value);
-    }
-    public static void setReplaceSwimAnimation(boolean value) {
-        CLIENT.replaceSwimAnimation.set(value);
     }
 }

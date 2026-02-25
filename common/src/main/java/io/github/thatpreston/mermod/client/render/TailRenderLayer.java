@@ -33,8 +33,8 @@ public class TailRenderLayer<T extends Player, M extends HumanoidModel<T>> exten
             TailModel model = getModel(style.model());
             stack.pushPose();
             VertexConsumer consumer = ItemRenderer.getFoilBufferDirect(source, RenderType.entityTranslucentCull(style.texture()), false, style.hasGlint());
-            model.copyFrom(this.getParentModel());
-            model.setupAnim(entity, limbSwing, limbSwingAmount, age, yaw, pitch);
+            model.main.copyFrom(this.getParentModel().body);
+            model.setupAnim(entity, limbSwing, limbSwingAmount, age, yaw, partialTicks);
             model.render(stack, consumer, light, OverlayTexture.NO_OVERLAY, style);
             stack.popPose();
         }

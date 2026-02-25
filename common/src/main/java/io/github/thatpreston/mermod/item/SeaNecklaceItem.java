@@ -7,6 +7,7 @@ import io.github.thatpreston.mermod.item.modifier.NecklaceModifier;
 import io.github.thatpreston.mermod.item.modifier.NecklaceModifierItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SeaNecklaceItem extends Item implements DyeableLeatherItem, ItemExtension {
+    private static final Component MODIFIERS_TOOLTIP = Component.translatable("tooltip.mermod.modifiers").withStyle(ChatFormatting.GRAY);
+    private static final Component REMOVE_MODIFIERS_TOOLTIP = Component.translatable("tooltip.mermod.remove_modifiers").withStyle(ChatFormatting.GRAY);
     public SeaNecklaceItem() {
         super(new Item.Properties().arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).stacksTo(1));
     }
@@ -76,17 +79,19 @@ public class SeaNecklaceItem extends Item implements DyeableLeatherItem, ItemExt
     @Override
     public void appendHoverText(ItemStack necklace, @Nullable Level level, List<Component> list, TooltipFlag flag) {
         CompoundTag tag = necklace.getOrCreateTagElement("necklace_modifiers");
-        int count = 0;
+        List<Component> modifierComponents = new ArrayList<>();
         for(NecklaceModifierItem item : NecklaceModifierItem.MODIFIERS) {
             NecklaceModifier modifier = item.getModifier();
             if(modifier.isAdded(tag)) {
                 int color = item instanceof DyeableNecklaceModifierItem ? tag.getInt(modifier.getType() + "_color") : modifier.getTooltipColor();
-                list.add(Component.translatable("item.mermod." + modifier.getId() + "_modifier").withStyle(Style.EMPTY.withColor(color)));
-                count++;
+                modifierComponents.add(Component.literal(" ").append(Component.translatable("item.mermod." + modifier.getId() + "_modifier").withStyle(Style.EMPTY.withColor(color))));
             }
         }
-        if(count > 0) {
-            list.add(Component.translatable("item.mermod.sea_necklace.tooltip").withStyle(ChatFormatting.GRAY));
+        if(!modifierComponents.isEmpty()) {
+            list.add(CommonComponents.EMPTY);
+            list.add(MODIFIERS_TOOLTIP);
+            list.addAll(modifierComponents);
+            list.add(REMOVE_MODIFIERS_TOOLTIP);
         }
     }
 }

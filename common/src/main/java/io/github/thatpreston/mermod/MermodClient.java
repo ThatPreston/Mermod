@@ -11,6 +11,7 @@ import io.github.thatpreston.mermod.registry.RegistryHandler;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,17 @@ public class MermodClient {
             Platform.getMod(Mermod.MOD_ID).registerConfigurationScreen(MermodClothConfigScreen::build);
         }
     }
+    public static TailStyle getTailStyle(Player player) {
+        ItemStack necklace = Mermod.getNecklace(player);
+        if(!necklace.isEmpty()) {
+            return TailStyle.fromNecklace(necklace);
+        }
+        return MermodPlatform.getTailStyle(player);
+    }
+    public static boolean hasTailStyle(Player player) {
+        ItemStack necklace = Mermod.getNecklace(player);
+        return !necklace.isEmpty() || MermodPlatform.hasTailStyle(player);
+    }
     public static boolean shouldTryRenderingTail(Player player) {
         if(!player.isInvisible()) {
             return !Mermod.figuraLoaded || MermodFiguraAPI.isTailVisible(player.getUUID());
@@ -46,7 +58,7 @@ public class MermodClient {
     }
     public static TailStyle getRenderedTailStyle(Player player) {
         if(shouldTryRenderingTail(player)) {
-            TailStyle style = Mermod.getTailStyle(player);
+            TailStyle style = getTailStyle(player);
             if(style != null && (player.isInWater() || style.permanent())) {
                 return style;
             }
@@ -55,7 +67,7 @@ public class MermodClient {
     }
     public static boolean shouldRenderTail(Player player) {
         if(player.isInWater()) {
-            return shouldTryRenderingTail(player) && Mermod.hasTailStyle(player);
+            return shouldTryRenderingTail(player) && hasTailStyle(player);
         }
         return getRenderedTailStyle(player) != null;
     }

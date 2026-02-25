@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NecklaceModifierItem extends Item {
+    private static final Component MODIFIER_TOOLTIP = Component.translatable("tooltip.mermod.modifier").withStyle(ChatFormatting.GRAY);
     public static final ArrayList<NecklaceModifierItem> MODIFIERS = new ArrayList<>();
     public final NecklaceModifier modifier;
     public NecklaceModifierItem(NecklaceModifier modifier) {
@@ -46,6 +47,6 @@ public class NecklaceModifierItem extends Item {
     }
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-        list.add(Component.translatable("item.mermod.necklace_modifier.tooltip").withStyle(ChatFormatting.GRAY));
+        list.add(MODIFIER_TOOLTIP);
     }
 }

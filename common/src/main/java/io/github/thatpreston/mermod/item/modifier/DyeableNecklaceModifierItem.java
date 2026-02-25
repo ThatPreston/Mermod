@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class DyeableNecklaceModifierItem extends NecklaceModifierItem implements DyeableLeatherItem {
+    private static final Component DYEABLE_MODIFIER_TOOLTIP = Component.translatable("tooltip.mermod.dyeable_modifier").withStyle(ChatFormatting.GRAY);
     public DyeableNecklaceModifierItem(NecklaceModifier modifier) {
         super(modifier);
     }
@@ -40,6 +41,6 @@ public class DyeableNecklaceModifierItem extends NecklaceModifierItem implements
     }
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-        list.add(Component.translatable("item.mermod.dyeable_necklace_modifier.tooltip").withStyle(ChatFormatting.GRAY));
+        list.add(DYEABLE_MODIFIER_TOOLTIP);
     }
 }

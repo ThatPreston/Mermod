@@ -1,7 +1,9 @@
 package io.github.thatpreston.mermod.compat;
 
-import io.github.thatpreston.mermod.Mermod;
+import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.TailStyle;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.figuramc.figura.avatar.Avatar;
@@ -16,7 +18,7 @@ import java.util.*;
 @FiguraAPIPlugin
 @LuaWhitelist
 public class MermodFiguraAPI implements FiguraAPI {
-    public static final Map<UUID, Boolean> TAIL_VISIBLE = new HashMap<>();
+    public static final Object2BooleanMap<UUID> TAIL_VISIBLE = new Object2BooleanOpenHashMap<>();
     private Avatar avatar;
     public MermodFiguraAPI() {}
     public MermodFiguraAPI(Avatar avatar) {
@@ -46,7 +48,7 @@ public class MermodFiguraAPI implements FiguraAPI {
     public LuaValue getTailStyle() {
         Entity entity = avatar.luaRuntime.getUser();
         if(entity instanceof Player player) {
-            TailStyle style = Mermod.getTailStyle(player);
+            TailStyle style = MermodClient.getTailStyle(player);
             if(style != null) {
                 LuaTable table = new LuaTable();
                 table.set("texture", LuaValue.valueOf(style.texture().toString()));
@@ -57,6 +59,7 @@ public class MermodFiguraAPI implements FiguraAPI {
                 table.set("hasGradient", LuaValue.valueOf(style.hasGradient()));
                 setRGB(table, "gradientColor", style.gradientColor());
                 table.set("hasGlint", LuaValue.valueOf(style.hasGlint()));
+                table.set("permanent", LuaValue.valueOf(style.permanent()));
                 return table;
             }
         }
@@ -72,5 +75,8 @@ public class MermodFiguraAPI implements FiguraAPI {
     }
     public static boolean isTailVisible(UUID uuid) {
         return TAIL_VISIBLE.getOrDefault(uuid, true);
+    }
+    public static void resetVisible(UUID uuid) {
+        TAIL_VISIBLE.removeBoolean(uuid);
     }
 }

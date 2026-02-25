@@ -1,0 +1,17 @@
+{
+  "item.mermod.sea_necklace": "Zee Ketting",
+  "item.mermod.sea_crystal": "Zee Kristal",
+  "item.mermod.mermaid_bra_modifier": "Zeemeermin BH",
+  "item.mermod.glowing_pearl_modifier": "Gloeiende Parel",
+  "item.mermod.tail_gradient_modifier": "Staart Gradiënt",
+  "item.mermod.tail_moisturizer_modifier": "Staart Moisturizer",
+  "item.mermod.moon_rock_modifier": "Maan Steen",
+  "item.mermod.ursula_shell_modifier": "Ursula's Schelp",
+  "item.mermod.deep_sea_crystal_modifier": "Diep Zee Kristal",
+  "tooltip.mermod.modifiers": "Modifiers:",
+  "tooltip.mermod.remove_modifiers": "Sluip en klik op rechts om modificaties te verwijderen",
+  "tooltip.mermod.modifier": "Kan worden gecombineerd met een Zee Ketting",
+  "tooltip.mermod.dyeable_modifier": "Kan worden geverfd of gecombineerd met een Zee Ketting",
+  "option.mermod.disableNightVisionFlashing": "Nacht Zicht Knipperend Oplossing",
+  "option.mermod.replaceSwimAnimation": "Vervanging Zwem Animatie"
+}
