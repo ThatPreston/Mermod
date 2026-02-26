@@ -10,3 +10,5 @@ This mod is available for Fabric and NeoForge. Starting in version 3.0.0, [Archi
 
 [![](https://dcbadge.vercel.app/api/server/QS9Daqs4WX?style=flat)](https://discord.gg/QS9Daqs4WX)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+
+[![](https://dcbadge.limes.pink/api/server/QS9Daqs4WX)](https://discord.gg/QS9Daqs4WX)
