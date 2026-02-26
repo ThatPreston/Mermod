@@ -4,7 +4,6 @@ import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import io.github.thatpreston.mermod.client.render.model.TailLayerDefinitions;
-import io.github.thatpreston.mermod.compat.AccessoriesCompat;
 import io.github.thatpreston.mermod.compat.MermodClothConfigScreen;
 import io.github.thatpreston.mermod.compat.MermodFiguraAPI;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -26,11 +25,7 @@ public class MermodClient {
         EntityModelLayerRegistry.register(H2O_TAIL_LAYER, () -> TailLayerDefinitions.getDefault(true));
         EntityModelLayerRegistry.register(SIREN_TAIL_LAYER, TailLayerDefinitions::getSiren);
     }
-    public static void clientSetup() {
-        if(Mermod.accessoriesLoaded) {
-            AccessoriesCompat.registerRenderer();
-        }
-    }
+    public static void clientSetup() {}
     private static ModelLayerLocation createTailModelLayer(String name) {
         ModelLayerLocation location = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, name), "main");
         TAIL_MODEL_LAYERS.add(location);
