@@ -1,6 +1,6 @@
 package io.github.thatpreston.mermod.mixin;
 
-import io.github.thatpreston.mermod.client.render.PlayerRenderStateExtension;
+import io.github.thatpreston.mermod.client.render.AvatarRenderStateExtension;
 import io.github.thatpreston.mermod.client.render.model.TailModel;
 import io.github.thatpreston.mermod.config.MermodConfig;
 import net.minecraft.client.model.ArmedModel;
@@ -29,7 +29,7 @@ public abstract class HumanoidModelMixin<T extends HumanoidRenderState> extends 
     @Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V", at = @At(value = "CONSTANT", args = "floatValue=26.0F", ordinal = 0), cancellable = true)
     private void onSetupAnim(T state, CallbackInfo info) {
         if(MermodConfig.shouldReplaceSwimAnimation()) {
-            if(state instanceof PlayerRenderStateExtension extension && extension.getTailStyle() != null && state.isInWater) {
+            if(state instanceof AvatarRenderStateExtension extension && extension.mermod$getTailStyle() != null && state.isInWater) {
                 float swimAmount = state.swimAmount;
                 float right = state.attackArm == HumanoidArm.RIGHT && state.attackTime > 0 ? 0 : swimAmount;
                 float left = state.attackArm == HumanoidArm.LEFT && state.attackTime > 0 ? 0 : swimAmount;

@@ -10,8 +10,8 @@ import io.github.thatpreston.mermod.item.modifier.NecklaceModifierItem;
 import io.github.thatpreston.mermod.recipe.ModifiersRecipe;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -37,9 +37,9 @@ public class RegistryHandler {
     public static final DeferredRegister<DataComponentType<?>> COMPONENT_TYPES = DeferredRegister.create(Mermod.MOD_ID, Registries.DATA_COMPONENT_TYPE);
     public static final RegistrySupplier<DataComponentType<NecklaceModifiers>> NECKLACE_MODIFIERS_COMPONENT_TYPE = registerComponentType("necklace_modifiers", builder -> builder.persistent(NecklaceModifiers.CODEC).networkSynchronized(NecklaceModifiers.STREAM_CODEC));
     private static RegistrySupplier<Item> registerItem(String id, Function<ResourceKey<Item>, Item> function) {
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, id);
-        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, location);
-        return ITEMS.register(location, () -> function.apply(key));
+        Identifier identifier = Identifier.fromNamespaceAndPath(Mermod.MOD_ID, id);
+        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, identifier);
+        return ITEMS.register(identifier, () -> function.apply(key));
     }
     private static RegistrySupplier<Item> registerModifierItem(String type, NecklaceModifier modifier) {
         return registerItem(modifier.id() + "_modifier", key -> new NecklaceModifierItem(new Item.Properties().setId(key).arch$tab(CreativeModeTabs.INGREDIENTS), type, modifier));

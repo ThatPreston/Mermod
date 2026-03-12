@@ -46,7 +46,7 @@ public class Mermod {
         if(!stack.is(ItemTags.DYEABLE) || !stack.has(DataComponents.DYED_COLOR)) {
             return InteractionResult.TRY_WITH_EMPTY_HAND;
         } else {
-            if(!level.isClientSide) {
+            if(!level.isClientSide()) {
                 stack.remove(DataComponents.DYED_COLOR);
                 player.awardStat(Stats.CLEAN_ARMOR);
                 LayeredCauldronBlock.lowerFillLevel(state, level, pos);

@@ -6,15 +6,15 @@ import io.github.thatpreston.mermod.client.render.TailRenderLayer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 
 public class MermodFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         MermodClient.clientSetup();
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, registrationHelper, context) -> {
-            if(renderer instanceof PlayerRenderer playerRenderer) {
-                registrationHelper.register(new TailRenderLayer(playerRenderer, context.getModelSet()));
+            if(renderer instanceof AvatarRenderer<?> avatarRenderer) {
+                registrationHelper.register(new TailRenderLayer(avatarRenderer, context.getModelSet()));
             }
         });
         RenderPipelines.register(MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);

@@ -4,14 +4,16 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "mixins": [
+    "LivingEntityMixin"
   ],
   "client": [
+    "AvatarRendererMixin",
+    "AvatarRenderStateMixin",
+    "GameRendererMixin",
     "HumanoidArmorLayerMixin",
     "HumanoidModelMixin",
-    "PlayerRendererMixin",
-    "PlayerModelMixin",
-    "PlayerRenderStateMixin",
-    "GameRendererMixin"
+    "ModelPartAccessor",
+    "PlayerModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

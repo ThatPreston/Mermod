@@ -1,45 +1,41 @@
 package io.github.thatpreston.mermod.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.model.TailModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.model.player.PlayerModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TailRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel> {
+public class TailRenderLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
     private final List<TailModel> models = new ArrayList<>();
-    public TailRenderLayer(PlayerRenderer parent, EntityModelSet set) {
+    public TailRenderLayer(RenderLayerParent<AvatarRenderState, PlayerModel> parent, EntityModelSet set) {
         super(parent);
         for(ModelLayerLocation layer : MermodClient.TAIL_MODEL_LAYERS) {
             models.add(new TailModel(set.bakeLayer(layer)));
         }
     }
     @Override
-    public void render(PoseStack stack, MultiBufferSource source, int light, PlayerRenderState state, float limbSwing, float limbSwingAmount) {
-        PlayerRenderStateExtension extension = (PlayerRenderStateExtension)state;
-        TailStyle style = extension.getTailStyle();
+    public void submit(PoseStack stack, SubmitNodeCollector collector, int light, AvatarRenderState state, float yRot, float xRot) {
+        AvatarRenderStateExtension extension = (AvatarRenderStateExtension)state;
+        TailStyle style = extension.mermod$getTailStyle();
         if(style != null) {
             TailModel model = getModel(style.model());
             if(model != null) {
                 stack.pushPose();
+                this.getParentModel().body.translateAndRotate(stack);
                 model.setupAnim(state);
-                model.main.copyFrom(this.getParentModel().body);
-                model.main.translateAndRotate(stack);
-                VertexConsumer consumer = source.getBuffer(MermodRenderTypes.armorTranslucentCull(style.texture()));
-                model.render(stack, consumer, light, OverlayTexture.NO_OVERLAY, style);
+                model.submit(stack, collector, light, OverlayTexture.NO_OVERLAY, style, MermodRenderTypes.armorTranslucentCull(style.texture()), state.outlineColor);
                 if(style.hasGlint()) {
-                    VertexConsumer glintConsumer = source.getBuffer(MermodRenderTypes.armorEntityGlintCull());
-                    model.render(stack, glintConsumer, light, OverlayTexture.NO_OVERLAY, style);
+                    model.submit(stack, collector, light, OverlayTexture.NO_OVERLAY, style, MermodRenderTypes.armorEntityGlintCull(), state.outlineColor);
                 }
                 stack.popPose();
             }

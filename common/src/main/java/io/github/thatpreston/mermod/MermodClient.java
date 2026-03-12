@@ -1,13 +1,11 @@
 package io.github.thatpreston.mermod;
 
-import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import io.github.thatpreston.mermod.client.render.model.TailLayerDefinitions;
-import io.github.thatpreston.mermod.compat.MermodClothConfigScreen;
 import io.github.thatpreston.mermod.compat.MermodFiguraAPI;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,21 +18,15 @@ public class MermodClient {
     public static final ModelLayerLocation H2O_TAIL_LAYER = createTailModelLayer("h2o_tail");
     public static final ModelLayerLocation SIREN_TAIL_LAYER = createTailModelLayer("siren_tail");
     public static void init() {
-        registerConfigScreen();
-        EntityModelLayerRegistry.register(DEFAULT_TAIL_LAYER, () -> TailLayerDefinitions.getDefault(false));
-        EntityModelLayerRegistry.register(H2O_TAIL_LAYER, () -> TailLayerDefinitions.getDefault(true));
+        EntityModelLayerRegistry.register(DEFAULT_TAIL_LAYER, TailLayerDefinitions::getDefault);
+        EntityModelLayerRegistry.register(H2O_TAIL_LAYER, TailLayerDefinitions::getDefaultDorsalFins);
         EntityModelLayerRegistry.register(SIREN_TAIL_LAYER, TailLayerDefinitions::getSiren);
     }
     public static void clientSetup() {}
     private static ModelLayerLocation createTailModelLayer(String name) {
-        ModelLayerLocation location = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Mermod.MOD_ID, name), "main");
+        ModelLayerLocation location = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Mermod.MOD_ID, name), "main");
         TAIL_MODEL_LAYERS.add(location);
         return location;
-    }
-    private static void registerConfigScreen() {
-        if(!Platform.isFabric() && Platform.isModLoaded("cloth_config")) {
-            Platform.getMod(Mermod.MOD_ID).registerConfigurationScreen(MermodClothConfigScreen::build);
-        }
     }
     public static TailStyle getTailStyle(Player player) {
         ItemStack necklace = Mermod.getNecklace(player);

@@ -4,31 +4,33 @@ import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.MermodRenderTypes;
 import io.github.thatpreston.mermod.client.render.TailRenderLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
+import net.minecraft.world.entity.player.PlayerModelType;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 
-@EventBusSubscriber(modid = Mermod.MOD_ID, value = Dist.CLIENT)
+@Mod(value = Mermod.MOD_ID, dist = Dist.CLIENT)
 public class MermodNeoForgeClient {
-    @SubscribeEvent
-    public static void clientSetup(FMLClientSetupEvent event) {
+    public MermodNeoForgeClient(IEventBus eventBus) {
+        eventBus.addListener(this::clientSetup);
+        eventBus.addListener(this::addLayer);
+        eventBus.addListener(this::registerRenderPipelines);
+    }
+    public void clientSetup(FMLClientSetupEvent event) {
         MermodClient.clientSetup();
     }
-    @SubscribeEvent
-    public static void addLayer(EntityRenderersEvent.AddLayers event) {
-        for(PlayerSkin.Model skin : event.getSkins()) {
-            if(event.getSkin(skin) instanceof PlayerRenderer renderer) {
+    public void addLayer(EntityRenderersEvent.AddLayers event) {
+        for(PlayerModelType playerModelType : event.getSkins()) {
+            if(event.getPlayerRenderer(playerModelType) instanceof AvatarRenderer<?> renderer) {
                 renderer.addLayer(new TailRenderLayer(renderer, event.getEntityModels()));
             }
         }
     }
-    @SubscribeEvent
-    public static void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
+    public void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
         event.registerPipeline(MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
         event.registerPipeline(MermodRenderTypes.GLINT_CULL_PIPELINE);
     }
