@@ -7,8 +7,8 @@ import io.github.thatpreston.mermod.mixin.ModelPartAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.OrderedSubmitNodeCollector;
 import net.minecraft.client.renderer.OutlineBufferSource;
-import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.util.ARGB;
@@ -98,13 +98,13 @@ public class TailModel extends EntityModel<AvatarRenderState> {
             }
         }
     }
-    public void submit(PoseStack stack, SubmitNodeCollector collector, int light, int overlay, TailStyle style, RenderType renderType, int outlineColor) {
+    public void submit(PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, TailStyle style, RenderType renderType, int outlineColor) {
         if(style.hasBra()) {
             collector.submitModelPart(this.bra, stack, renderType, light, overlay, null, false, false, style.braColor(), null, outlineColor);
         }
         this.renderParts(this.parts, stack, collector, light, overlay, renderType, style, outlineColor);
     }
-    private void renderParts(ModelPart[] parts, PoseStack stack, SubmitNodeCollector collector, int light, int overlay, RenderType renderType, TailStyle style, int outlineColor) {
+    private void renderParts(ModelPart[] parts, PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, RenderType renderType, TailStyle style, int outlineColor) {
         for(int partIndex = 0; partIndex < parts.length; partIndex++) {
             stack.pushPose();
             int primaryColor = style.hasGradient() ? ARGB.srgbLerp((float)partIndex / (parts.length - 1), style.tailColor(), style.gradientColor()) : style.tailColor();
@@ -115,7 +115,7 @@ public class TailModel extends EntityModel<AvatarRenderState> {
             stack.popPose();
         }
     }
-    private void renderPart(ModelPart part, PoseStack stack, SubmitNodeCollector collector, int light, int overlay, RenderType renderType, int primaryColor, int secondaryColor, int outlineColor) {
+    private void renderPart(ModelPart part, PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, RenderType renderType, int primaryColor, int secondaryColor, int outlineColor) {
         part.translateAndRotate(stack);
         List<ModelPart.Cube> cubes = ((ModelPartAccessor)(Object)part).getCubes();
         for(int cubeIndex = 0; cubeIndex < cubes.size(); cubeIndex++) {

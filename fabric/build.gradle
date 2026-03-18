@@ -37,6 +37,11 @@ dependencies {
     modImplementation "eu.pb4.fork:trinkets:$rootProject.trinkets_version"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:$rootProject.cca_version"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:$rootProject.cca_version"
+    modImplementation "net.caffeinemc:sodium-fabric:$rootProject.sodium_version"
+    modImplementation "maven.modrinth:iris:$rootProject.iris_version-fabric"
+    modImplementation "org.anarres:jcpp:1.4.14"
+    modImplementation "io.github.douira:glsl-transformer:3.0.0-pre3"
+    modImplementation "org.antlr:antlr4-runtime:4.13.1"
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
