@@ -1,5 +1,6 @@
 package io.github.thatpreston.mermod;
 
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import io.github.thatpreston.mermod.client.render.model.TailLayerDefinitions;
@@ -17,12 +18,15 @@ public class MermodClient {
     public static final ModelLayerLocation DEFAULT_TAIL_LAYER = createTailModelLayer("default_tail");
     public static final ModelLayerLocation H2O_TAIL_LAYER = createTailModelLayer("h2o_tail");
     public static final ModelLayerLocation SIREN_TAIL_LAYER = createTailModelLayer("siren_tail");
+    public static boolean figuraLoaded;
+    public static boolean irisLoaded;
     public static void init() {
+        figuraLoaded = Platform.isModLoaded("figura");
+        irisLoaded = Platform.isModLoaded("iris");
         EntityModelLayerRegistry.register(DEFAULT_TAIL_LAYER, TailLayerDefinitions::getDefault);
         EntityModelLayerRegistry.register(H2O_TAIL_LAYER, TailLayerDefinitions::getDefaultDorsalFins);
         EntityModelLayerRegistry.register(SIREN_TAIL_LAYER, TailLayerDefinitions::getSiren);
     }
-    public static void clientSetup() {}
     private static ModelLayerLocation createTailModelLayer(String name) {
         ModelLayerLocation location = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Mermod.MOD_ID, name), "main");
         TAIL_MODEL_LAYERS.add(location);
@@ -41,7 +45,7 @@ public class MermodClient {
     }
     public static boolean shouldTryRenderingTail(Player player) {
         if(!player.isInvisible()) {
-            return !Mermod.figuraLoaded || MermodFiguraAPI.isTailVisible(player.getUUID());
+            return !figuraLoaded || MermodFiguraAPI.isTailVisible(player.getUUID());
         }
         return false;
     }

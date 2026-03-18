@@ -1,6 +1,5 @@
 package io.github.thatpreston.mermod.neoforge;
 
-import dev.architectury.platform.Platform;
 import io.github.thatpreston.mermod.Mermod;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.MermodRenderTypes;
@@ -12,20 +11,16 @@ import net.minecraft.world.entity.player.PlayerModelType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 
 @Mod(value = Mermod.MOD_ID, dist = Dist.CLIENT)
 public class MermodNeoForgeClient {
     public MermodNeoForgeClient(IEventBus eventBus) {
-        eventBus.addListener(this::clientSetup);
+        MermodClient.init();
         eventBus.addListener(this::addLayers);
         eventBus.addListener(this::registerRenderPipelines);
-    }
-    public void clientSetup(FMLClientSetupEvent event) {
-        MermodClient.clientSetup();
-        if(Platform.isModLoaded("iris")) {
+        if(MermodClient.irisLoaded) {
             IrisPipelines.copyPipeline(RenderPipelines.ARMOR_TRANSLUCENT, MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
             IrisPipelines.copyPipeline(RenderPipelines.GLINT, MermodRenderTypes.GLINT_CULL_PIPELINE);
         }

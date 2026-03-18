@@ -1,6 +1,5 @@
 package io.github.thatpreston.mermod.fabric;
 
-import dev.architectury.platform.Platform;
 import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.MermodRenderTypes;
 import io.github.thatpreston.mermod.client.render.TailRenderLayer;
@@ -13,7 +12,7 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 public class MermodFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        MermodClient.clientSetup();
+        MermodClient.init();
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, registrationHelper, context) -> {
             if(renderer instanceof AvatarRenderer<?> avatarRenderer) {
                 registrationHelper.register(new TailRenderLayer(avatarRenderer, context.getModelSet()));
@@ -21,7 +20,7 @@ public class MermodFabricClient implements ClientModInitializer {
         });
         RenderPipelines.register(MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
         RenderPipelines.register(MermodRenderTypes.GLINT_CULL_PIPELINE);
-        if(Platform.isModLoaded("iris")) {
+        if(MermodClient.irisLoaded) {
             IrisPipelines.copyPipeline(RenderPipelines.ARMOR_TRANSLUCENT, MermodRenderTypes.ARMOR_TRANSLUCENT_CULL_PIPELINE);
             IrisPipelines.copyPipeline(RenderPipelines.GLINT, MermodRenderTypes.GLINT_CULL_PIPELINE);
         }

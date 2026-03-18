@@ -1,7 +1,5 @@
 package io.github.thatpreston.mermod;
 
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.Env;
 import io.github.thatpreston.mermod.config.MermodConfig;
 import io.github.thatpreston.mermod.registry.RegistryHandler;
 import net.minecraft.core.BlockPos;
@@ -27,15 +25,9 @@ import java.util.Map;
 
 public class Mermod {
     public static final String MOD_ID = "mermod";
-    public static boolean figuraLoaded;
     public static void init() {
-        figuraLoaded = Platform.isModLoaded("figura");
         RegistryHandler.register();
-        if(Platform.getEnvironment() == Env.CLIENT) {
-            MermodClient.init();
-        }
     }
-    public static void commonSetup() {}
     public static void registerCauldronInteractions() {
         Map<Item, CauldronInteraction> map = CauldronInteraction.WATER.map();
         map.put(RegistryHandler.SEA_NECKLACE.get(), Mermod::cleanDyedItem);

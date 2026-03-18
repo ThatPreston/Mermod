@@ -21,7 +21,6 @@ public class MermodNeoForge {
         container.registerConfig(ModConfig.Type.CLIENT, MermodConfig.CLIENT_SPEC);
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
-        Mermod.commonSetup();
         if(curiosLoaded) {
             CuriosCompat.registerCurio();
         }
