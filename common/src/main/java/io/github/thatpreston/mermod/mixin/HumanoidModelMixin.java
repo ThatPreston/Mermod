@@ -45,6 +45,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
                     this.leftArm.zRot = Mth.lerp(left, this.leftArm.zRot, -z);
                 }
                 this.head.xRot = this.rotlerpRad(this.swimAmount, pitch * 0.017453292F, -Mth.PI / 3);
+                this.head.yRot = (float)Math.IEEEremainder(this.head.yRot, Mth.TWO_PI);
                 this.head.yRot *= Mth.lerp(this.swimAmount, 1, 0.5F);
                 this.hat.copyFrom(this.head);
                 info.cancel();
