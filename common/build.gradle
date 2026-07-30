@@ -11,5 +11,5 @@ dependencies {
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common:$rootProject.fcap_version"
     modCompileOnly "me.shedaniel.cloth:cloth-config:$rootProject.cloth_config_version"
     modCompileOnly "maven.modrinth:origins:1.10.2+mc.1.20.1"
-    modCompileOnly "io.github.apace100:apoli-2.9.2-mc.1.20.1:2.9.2+mc.1.20.x"
+    modCompileOnly "io.github.apace100:apoli:2.9.2+mc.1.20.x"
 }

@@ -36,7 +36,7 @@ dependencies {
     }
     modImplementation("com.terraformersmc:modmenu:$rootProject.modmenu_version")
     modImplementation "maven.modrinth:origins:1.10.2+mc.1.20.1"
-    modImplementation "io.github.apace100:apoli-2.9.2-mc.1.20.1:2.9.2+mc.1.20.x"
+    modImplementation "io.github.apace100:apoli:2.9.2+mc.1.20.x"
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
