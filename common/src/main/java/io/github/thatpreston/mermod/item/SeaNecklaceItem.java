@@ -11,7 +11,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -60,7 +59,7 @@ public class SeaNecklaceItem extends Item {
         for(ItemStack stack : list) {
             NecklaceModifierItem item = (NecklaceModifierItem)stack.getItem();
             NecklaceModifier modifier = item.getModifier();
-            if(stack.is(ItemTags.DYEABLE)) {
+            if(stack.has(DataComponents.DYED_COLOR)) {
                 DyedItemColor dyedItemColor = stack.get(DataComponents.DYED_COLOR);
                 modifiers.add(item.getType(), modifier.withColor(dyedItemColor != null ? dyedItemColor.rgb() : 16777215));
             } else {

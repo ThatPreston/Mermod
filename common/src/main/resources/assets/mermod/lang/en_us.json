@@ -8,6 +8,7 @@
   "item.mermod.moon_rock_modifier": "Moon Rock",
   "item.mermod.ursula_shell_modifier": "Ursula's Shell",
   "item.mermod.deep_sea_crystal_modifier": "Deep Sea Crystal",
+  "tag.item.mermod.necklace_modifier": "Necklace Modifier",
   "tooltip.mermod.modifiers": "Modifiers:",
   "tooltip.mermod.remove_modifiers": "Crouch and right click to remove modifiers",
   "tooltip.mermod.modifier": "Can be combined with a Sea Necklace",

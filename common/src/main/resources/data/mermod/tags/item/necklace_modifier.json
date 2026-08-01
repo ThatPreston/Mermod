@@ -1,0 +1,12 @@
+{
+  "values": [
+    "mermod:mermaid_bra_modifier",
+    "mermod:glowing_pearl_modifier",
+    "mermod:tail_gradient_modifier",
+    "mermod:tail_moisturizer_modifier",
+    "mermod:moon_rock_modifier",
+    "mermod:ursula_shell_modifier",
+    "mermod:deep_sea_crystal_modifier"
+  ],
+  "replace": false
+}

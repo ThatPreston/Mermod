@@ -2,7 +2,6 @@ package io.github.thatpreston.mermod.item.modifier;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -18,10 +17,12 @@ public class NecklaceModifierItem extends Item {
     public static final List<NecklaceModifierItem> MODIFIERS = new ArrayList<>();
     private final String type;
     private final NecklaceModifier modifier;
-    public NecklaceModifierItem(Item.Properties properties, String type, NecklaceModifier modifier) {
+    private final boolean dyeable;
+    public NecklaceModifierItem(Item.Properties properties, String type, NecklaceModifier modifier, boolean dyeable) {
         super(properties);
         this.type = type;
         this.modifier = modifier;
+        this.dyeable = dyeable;
         MODIFIERS.add(this);
     }
     public String getType() {
@@ -30,8 +31,11 @@ public class NecklaceModifierItem extends Item {
     public NecklaceModifier getModifier() {
         return modifier;
     }
+    public boolean isDyeable() {
+        return dyeable;
+    }
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
-        consumer.accept(stack.is(ItemTags.DYEABLE) ? DYEABLE_MODIFIER_TOOLTIP : MODIFIER_TOOLTIP);
+        consumer.accept(dyeable ? DYEABLE_MODIFIER_TOOLTIP : MODIFIER_TOOLTIP);
     }
 }

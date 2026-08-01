@@ -15,7 +15,6 @@ public class MermodFabric implements ModInitializer {
         FabricLoader loader = FabricLoader.getInstance();
         trinketsLoaded = loader.isModLoaded("trinkets");
         Mermod.init();
-        Mermod.registerCauldronInteractions();
         if(trinketsLoaded) {
             TrinketsCompat.registerTrinket();
         }

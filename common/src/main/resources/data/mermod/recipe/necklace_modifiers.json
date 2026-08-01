@@ -1,0 +1,10 @@
+{
+  "type": "mermod:crafting_modifiers",
+  "category": "misc",
+  "modifier": "#mermod:necklace_modifier",
+  "group": "mermod",
+  "result": {
+    "id": "mermod:sea_necklace"
+  },
+  "target": "mermod:sea_necklace"
+}

@@ -1,73 +1,93 @@
 package io.github.thatpreston.mermod.recipe;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.thatpreston.mermod.item.SeaNecklaceItem;
-import io.github.thatpreston.mermod.item.modifier.NecklaceModifierItem;
-import io.github.thatpreston.mermod.registry.RegistryHandler;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModifiersRecipe extends CustomRecipe {
-    public ModifiersRecipe(CraftingBookCategory category) {
-        super(category);
+public class ModifiersRecipe extends NormalCraftingRecipe {
+    public static final MapCodec<ModifiersRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec((i) -> i.group(CommonInfo.MAP_CODEC.forGetter((o) -> o.commonInfo), CraftingBookInfo.MAP_CODEC.forGetter((o) -> o.bookInfo), Ingredient.CODEC.fieldOf("target").forGetter((o) -> o.target), Ingredient.CODEC.fieldOf("modifier").forGetter((o) -> o.modifier), ItemStackTemplate.CODEC.fieldOf("result").forGetter((o) -> o.result)).apply(i, ModifiersRecipe::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, ModifiersRecipe> STREAM_CODEC;
+    public static final RecipeSerializer<ModifiersRecipe> SERIALIZER;
+    private final Ingredient target;
+    private final Ingredient modifier;
+    private final ItemStackTemplate result;
+    public ModifiersRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, Ingredient target, Ingredient modifier, ItemStackTemplate result) {
+        super(commonInfo, bookInfo);
+        this.target = target;
+        this.modifier = modifier;
+        this.result = result;
     }
-    @Override
-    public boolean matches(CraftingInput input, Level level) {
-        ItemStack necklace = null;
-        List<ItemStack> modifiers = new ArrayList<>();
-        for(int i = 0; i < input.size(); i++) {
-            ItemStack stack = input.getItem(i);
-            if(!stack.isEmpty()) {
-                if(stack.getItem() instanceof SeaNecklaceItem) {
-                    if(necklace != null) {
-                        return false;
+    public boolean matches(final CraftingInput input, final Level level) {
+        if(input.ingredientCount() < 2) {
+            return false;
+        } else {
+            List<ItemStack> modifiers = new ArrayList<>();
+            ItemStack targetStack = ItemStack.EMPTY;
+            for(int slot = 0; slot < input.size(); slot++) {
+                ItemStack stack = input.getItem(slot);
+                if(!stack.isEmpty()) {
+                    if(this.target.test(stack)) {
+                        if(!targetStack.isEmpty()) {
+                            return false;
+                        }
+                        targetStack = stack;
+                    } else {
+                        if(!this.modifier.test(stack)) {
+                            return false;
+                        }
+                        modifiers.add(stack);
                     }
-                    necklace = stack;
+                }
+            }
+            return !modifiers.isEmpty() && !targetStack.isEmpty() && SeaNecklaceItem.canAddModifiers(targetStack, modifiers);
+        }
+    }
+    public ItemStack assemble(final CraftingInput input) {
+        List<ItemStack> modifiers = new ArrayList<>();
+        ItemStack targetStack = ItemStack.EMPTY;
+        for(int slot = 0; slot < input.size(); slot++) {
+            ItemStack stack = input.getItem(slot);
+            if(!stack.isEmpty()) {
+                if(this.target.test(stack)) {
+                    if(!targetStack.isEmpty()) {
+                        return ItemStack.EMPTY;
+                    }
+                    targetStack = stack;
                 } else {
-                    if(!(stack.getItem() instanceof NecklaceModifierItem)) {
-                        return false;
+                    if(!this.modifier.test(stack)) {
+                        return ItemStack.EMPTY;
                     }
                     modifiers.add(stack);
                 }
             }
         }
-        return necklace != null && !modifiers.isEmpty() && SeaNecklaceItem.canAddModifiers(necklace, modifiers);
+        if(!targetStack.isEmpty() && !modifiers.isEmpty()) {
+            ItemStack result = TransmuteRecipe.createWithOriginalComponents(this.result, targetStack);
+            SeaNecklaceItem.addModifiers(result, modifiers);
+            return result;
+        } else {
+            return ItemStack.EMPTY;
+        }
     }
     @Override
-    public ItemStack assemble(CraftingInput input, HolderLookup.Provider provider) {
-        List<ItemStack> modifiers = new ArrayList<>();
-        ItemStack necklace = null;
-        for(int i = 0; i < input.size(); i++) {
-            ItemStack stack = input.getItem(i);
-            if(!stack.isEmpty()) {
-                if(stack.getItem() instanceof SeaNecklaceItem) {
-                    if(necklace != null) {
-                        return ItemStack.EMPTY;
-                    }
-                    necklace = stack.copy();
-                } else {
-                    if(!(stack.getItem() instanceof NecklaceModifierItem)) {
-                        return ItemStack.EMPTY;
-                    }
-                    modifiers.add(stack);
-                }
-            }
-        }
-        if(necklace != null && !modifiers.isEmpty()) {
-            SeaNecklaceItem.addModifiers(necklace, modifiers);
-            return necklace;
-        }
-        return ItemStack.EMPTY;
+    public RecipeSerializer<ModifiersRecipe> getSerializer() {
+        return SERIALIZER;
     }
     @Override
-    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
-        return RegistryHandler.MODIFIERS_RECIPE_SERIALIZER.get();
+    protected PlacementInfo createPlacementInfo() {
+        return PlacementInfo.create(List.of(this.target, this.modifier));
+    }
+    static {
+        STREAM_CODEC = StreamCodec.composite(CommonInfo.STREAM_CODEC, (o) -> o.commonInfo, CraftingBookInfo.STREAM_CODEC, (o) -> o.bookInfo, Ingredient.CONTENTS_STREAM_CODEC, (o) -> o.target, Ingredient.CONTENTS_STREAM_CODEC, (o) -> o.modifier, ItemStackTemplate.STREAM_CODEC, (o) -> o.result, ModifiersRecipe::new);
+        SERIALIZER = new RecipeSerializer(MAP_CODEC, STREAM_CODEC);
     }
 }

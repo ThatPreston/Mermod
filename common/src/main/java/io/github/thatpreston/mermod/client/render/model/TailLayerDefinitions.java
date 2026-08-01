@@ -55,7 +55,7 @@ public class TailLayerDefinitions {
     }
     public static LayerDefinition getSiren() {
         return new TailBuilder().addSegments(
-                new TailBuilder.TailSegment("waist", 12).addBox(-4, 0, -2, 8, 12, 4, 24, 0, CubeDeformation.NONE).addSideFins(4, 8, 5, 4, 24, 40)
+                new TailBuilder.TailSegment("waist", 12).addBox(-4, 0, -2, 8, 12, 4, 24, 0, CubeDeformation.NONE)
                         .addSideFins(4, 8, 5, 4, 24, 40),
                 new TailBuilder.TailSegment("tail1").addBody(8, 3, 4, 0, 0)
                         .addSideFins(4, 0, 5, 3, 24, 44),

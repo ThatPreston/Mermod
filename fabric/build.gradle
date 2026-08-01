@@ -22,27 +22,23 @@ configurations {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
-    modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
-    modCompileOnly "org.figuramc:figura-fabric:$rootProject.figura_version"
-    implementation "com.github.FiguraMC.luaj:luaj-core:$rootProject.luaj_version-figura"
-    implementation "com.github.FiguraMC.luaj:luaj-jse:$rootProject.luaj_version-figura"
-    implementation "com.neovisionaries:nv-websocket-client:$rootProject.nv_websocket_version"
-    modApi(include("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:$rootProject.fcap_version"))
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:$rootProject.cloth_config_version") {
+    implementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    implementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    implementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+    api(include("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:$rootProject.fcap_version"))
+    implementation("me.shedaniel.cloth:cloth-config-fabric:$rootProject.cloth_config_version") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "com.terraformersmc:modmenu:$rootProject.modmenu_version"
-    modImplementation "eu.pb4.fork:trinkets:$rootProject.trinkets_version"
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:$rootProject.cca_version"
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:$rootProject.cca_version"
-    modImplementation "net.caffeinemc:sodium-fabric:$rootProject.sodium_version"
-    modImplementation "maven.modrinth:iris:$rootProject.iris_version-fabric"
-    modImplementation "org.anarres:jcpp:1.4.14"
-    modImplementation "io.github.douira:glsl-transformer:3.0.0-pre3"
-    modImplementation "org.antlr:antlr4-runtime:4.13.1"
-    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
+    implementation "com.terraformersmc:modmenu:$rootProject.modmenu_version"
+    implementation "eu.pb4:trinkets:$rootProject.trinkets_version"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-base:$rootProject.cca_version"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:$rootProject.cca_version"
+    implementation "net.caffeinemc:sodium-fabric:$rootProject.sodium_version"
+    implementation "maven.modrinth:iris:$rootProject.iris_version-fabric"
+    implementation "org.anarres:jcpp:1.4.14"
+    implementation "io.github.douira:glsl-transformer:3.0.0-pre3"
+    implementation "org.antlr:antlr4-runtime:4.13.1"
+    common(project(path: ':common')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
 
@@ -63,11 +59,14 @@ processResources {
     }
 }
 
-shadowJar {
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+jar {
+    archiveClassifier = "raw"
 }
 
-remapJar {
-    inputFile.set shadowJar.archiveFile
+shadowJar {
+    dependsOn(jar)
+    mainSpec.sourcePaths.clear()
+    from(zipTree(jar.archiveFile))
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = null
 }

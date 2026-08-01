@@ -4,7 +4,10 @@ import io.github.thatpreston.mermod.MermodClient;
 import io.github.thatpreston.mermod.client.render.MermodRenderTypes;
 import io.github.thatpreston.mermod.client.render.TailRenderLayer;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
+import net.irisshaders.iris.api.v0.IrisApi;
+import net.irisshaders.iris.api.v0.IrisProgram;
+import net.irisshaders.iris.apiimpl.IrisApiV0Impl;
 import net.irisshaders.iris.pipeline.IrisPipelines;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
@@ -13,7 +16,7 @@ public class MermodFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         MermodClient.init();
-        LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, registrationHelper, context) -> {
+        LivingEntityRenderLayerRegistrationCallback.EVENT.register((type, renderer, registrationHelper, context) -> {
             if(renderer instanceof AvatarRenderer<?> avatarRenderer) {
                 registrationHelper.register(new TailRenderLayer(avatarRenderer, context.getModelSet()));
             }

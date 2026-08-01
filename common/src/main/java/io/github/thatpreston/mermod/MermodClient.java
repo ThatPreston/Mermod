@@ -4,7 +4,6 @@ import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import io.github.thatpreston.mermod.client.render.TailStyle;
 import io.github.thatpreston.mermod.client.render.model.TailLayerDefinitions;
-import io.github.thatpreston.mermod.compat.MermodFiguraAPI;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -18,10 +17,8 @@ public class MermodClient {
     public static final ModelLayerLocation DEFAULT_TAIL_LAYER = createTailModelLayer("default_tail");
     public static final ModelLayerLocation H2O_TAIL_LAYER = createTailModelLayer("h2o_tail");
     public static final ModelLayerLocation SIREN_TAIL_LAYER = createTailModelLayer("siren_tail");
-    public static boolean figuraLoaded;
     public static boolean irisLoaded;
     public static void init() {
-        figuraLoaded = Platform.isModLoaded("figura");
         irisLoaded = Platform.isModLoaded("iris");
         EntityModelLayerRegistry.register(DEFAULT_TAIL_LAYER, TailLayerDefinitions::getDefault);
         EntityModelLayerRegistry.register(H2O_TAIL_LAYER, TailLayerDefinitions::getDefaultDorsalFins);
@@ -45,7 +42,7 @@ public class MermodClient {
     }
     public static boolean shouldTryRenderingTail(Player player) {
         if(!player.isInvisible()) {
-            return !figuraLoaded || MermodFiguraAPI.isTailVisible(player.getUUID());
+            return true;
         }
         return false;
     }

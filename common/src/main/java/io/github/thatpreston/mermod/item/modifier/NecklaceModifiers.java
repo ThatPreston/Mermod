@@ -6,7 +6,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 
@@ -24,10 +23,11 @@ public record NecklaceModifiers(Map<String, NecklaceModifier> modifiers) {
         modifiers.put(type, modifier);
     }
     public ItemStack remove(NecklaceModifierItem item) {
-        NecklaceModifier modifier = modifiers.remove(item.getType());
-        if(modifier != null) {
+        NecklaceModifier modifier = modifiers.get(item.getType());
+        if(modifier != null && modifier.is(item.getModifier())) {
+            modifiers.remove(item.getType());
             ItemStack stack = item.getDefaultInstance();
-            if(stack.is(ItemTags.DYEABLE) && modifier.color() != 16777215) {
+            if(item.isDyeable() && modifier.color() != item.getModifier().color()) {
                 stack.set(DataComponents.DYED_COLOR, new DyedItemColor(modifier.color()));
             }
             return stack;

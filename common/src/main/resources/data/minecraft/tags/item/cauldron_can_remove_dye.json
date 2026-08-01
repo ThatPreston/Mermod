@@ -1,8 +1,8 @@
 {
-  "replace": false,
   "values": [
     "mermod:sea_necklace",
     "mermod:mermaid_bra_modifier",
     "mermod:tail_gradient_modifier"
-  ]
+  ],
+  "replace": false
 }

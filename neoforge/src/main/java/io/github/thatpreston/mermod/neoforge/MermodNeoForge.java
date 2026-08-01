@@ -24,6 +24,5 @@ public class MermodNeoForge {
         if(curiosLoaded) {
             CuriosCompat.registerCurio();
         }
-        event.enqueueWork(Mermod::registerCauldronInteractions);
     }
 }

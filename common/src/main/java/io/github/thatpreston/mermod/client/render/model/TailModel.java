@@ -98,17 +98,17 @@ public class TailModel extends EntityModel<AvatarRenderState> {
             }
         }
     }
-    public void submit(PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, TailStyle style, RenderType renderType, int outlineColor) {
+    public void submit(PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, TailStyle style, RenderType renderType, int outlineColor, boolean isOverlay) {
         if(style.hasBra()) {
-            collector.submitModelPart(this.bra, stack, renderType, light, overlay, null, false, false, style.braColor(), null, outlineColor);
+            collector.submitModelPart(this.bra, stack, renderType, light, overlay, null, false, false, isOverlay ? -1 : style.braColor(), null, outlineColor);
         }
-        this.renderParts(this.parts, stack, collector, light, overlay, renderType, style, outlineColor);
+        this.renderParts(this.parts, stack, collector, light, overlay, renderType, style, outlineColor, isOverlay);
     }
-    private void renderParts(ModelPart[] parts, PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, RenderType renderType, TailStyle style, int outlineColor) {
+    private void renderParts(ModelPart[] parts, PoseStack stack, OrderedSubmitNodeCollector collector, int light, int overlay, RenderType renderType, TailStyle style, int outlineColor, boolean isOverlay) {
         for(int partIndex = 0; partIndex < parts.length; partIndex++) {
             stack.pushPose();
-            int primaryColor = style.hasGradient() ? ARGB.srgbLerp((float)partIndex / (parts.length - 1), style.tailColor(), style.gradientColor()) : style.tailColor();
-            int secondaryColor = style.hasGradient() ? style.gradientColor() : style.tailColor();
+            int primaryColor = isOverlay? -1 : (style.hasGradient() ? ARGB.srgbLerp((float)partIndex / (parts.length - 1), style.tailColor(), style.gradientColor()) : style.tailColor());
+            int secondaryColor = isOverlay ? -1 : (style.hasGradient() ? style.gradientColor() : style.tailColor());
             this.renderPart(parts[partIndex], stack, collector, light, overlay, renderType, primaryColor, secondaryColor, outlineColor);
         }
         for(int partIndex = 0; partIndex < parts.length; partIndex++) {

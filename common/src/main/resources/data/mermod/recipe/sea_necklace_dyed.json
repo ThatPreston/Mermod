@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_dye",
+  "category": "misc",
+  "dye": "#minecraft:dyes",
+  "group": "mermod",
+  "result": {
+    "id": "mermod:sea_necklace"
+  },
+  "target": "mermod:sea_necklace"
+}

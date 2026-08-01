@@ -8,7 +8,6 @@
     "PlayerMixin"
   ],
   "client": [
-    "AvatarMixin"
   ],
   "injectors": {
     "defaultRequire": 1

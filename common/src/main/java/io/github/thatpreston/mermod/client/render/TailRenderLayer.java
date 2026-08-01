@@ -33,9 +33,9 @@ public class TailRenderLayer extends RenderLayer<AvatarRenderState, PlayerModel>
                 stack.pushPose();
                 this.getParentModel().body.translateAndRotate(stack);
                 model.setupAnim(state);
-                model.submit(stack, collector, light, OverlayTexture.NO_OVERLAY, style, MermodRenderTypes.armorTranslucentCull(style.texture()), state.outlineColor);
+                model.submit(stack, collector, light, OverlayTexture.NO_OVERLAY, style, MermodRenderTypes.armorTranslucentCull(style.texture()), state.outlineColor, false);
                 if(style.hasGlint()) {
-                    model.submit(stack, collector.order(1), light, OverlayTexture.NO_OVERLAY, style, MermodRenderTypes.armorEntityGlintCull(), state.outlineColor);
+                    model.submit(stack, collector.order(1), light, OverlayTexture.NO_OVERLAY, style, MermodRenderTypes.armorEntityGlintCull(), state.outlineColor, true);
                 }
                 stack.popPose();
             }
