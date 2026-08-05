@@ -32,6 +32,7 @@ public class RegistryHandler {
     public static final RegistrySupplier<Item> MOON_ROCK_MODIFIER = registerModifierItem("tail", new NecklaceModifier("moon_rock", 16755968, "h2o", 1));
     public static final RegistrySupplier<Item> URSULA_SHELL_MODIFIER = registerModifierItem("tail", new NecklaceModifier("ursula_shell", 16768000, "ariel", 0));
     public static final RegistrySupplier<Item> DEEP_SEA_CRYSTAL_MODIFIER = registerModifierItem("tail", new NecklaceModifier("deep_sea_crystal", 4608611, "siren", 2));
+    public static final TagKey<Item> SEA_NECKLACE_TAG = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Mermod.MOD_ID, "sea_necklace"));
     public static final TagKey<Item> NECKLACE_MODIFIER_TAG = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Mermod.MOD_ID, "necklace_modifier"));
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Mermod.MOD_ID, Registries.RECIPE_SERIALIZER);
     public static final RegistrySupplier<RecipeSerializer<ModifiersRecipe>> MODIFIERS_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("crafting_modifiers", () -> ModifiersRecipe.SERIALIZER);
