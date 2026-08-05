@@ -55,7 +55,7 @@ public class Mermod {
             return accessorySlotNecklace;
         }
         ItemStack chestSlotNecklace = player.getItemBySlot(EquipmentSlot.CHEST);
-        if(chestSlotNecklace.is(RegistryHandler.SEA_NECKLACE.get())) {
+        if(chestSlotNecklace.is(RegistryHandler.SEA_NECKLACE_TAG)) {
             return chestSlotNecklace;
         }
         return ItemStack.EMPTY;
