@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 public class TailLayerDefinitions {
     public static LayerDefinition getDefault() {
         return new TailBuilder().addSegments(
-                new TailBuilder.TailSegment("waist", 12).addBox(-4, 0, -2, 8, 12, 4, 24, 0, CubeDeformation.NONE).addSideFins(4, 8, 5, 4, 24, 40)
+                new TailBuilder.TailSegment("waist", 12).addBox(-4, 0, -2, 8, 12, 4, 24, 0, CubeDeformation.NONE)
                         .addSideFins(4, 8, 5, 4, 24, 40),
                 new TailBuilder.TailSegment("tail1").addBody(8, 4, 4, 0, 0)
                         .addSideFins(4, 0, 5, 4, 24, 44),
@@ -27,7 +27,7 @@ public class TailLayerDefinitions {
     }
     public static LayerDefinition getDefaultDorsalFins() {
         return new TailBuilder().addSegments(
-                new TailBuilder.TailSegment("waist", 12).addBox(-4, 0, -2, 8, 12, 4, 24, 0, CubeDeformation.NONE).addSideFins(4, 8, 5, 4, 24, 40)
+                new TailBuilder.TailSegment("waist", 12).addBox(-4, 0, -2, 8, 12, 4, 24, 0, CubeDeformation.NONE)
                         .addSideFins(4, 8, 5, 4, 24, 40)
                         .addBox(-0.5F, 10, 2, 1, 2, 1, 32, 40, new CubeDeformation(-0.1F, 0, 0)),
                 new TailBuilder.TailSegment("tail1").addBody(8, 4, 4, 0, 0)

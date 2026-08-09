@@ -43,7 +43,7 @@ public abstract class HumanoidModelMixin<T extends HumanoidRenderState> extends 
                     this.leftArm.zRot = Mth.lerp(left, this.leftArm.zRot, -z);
                 }
                 this.head.xRot = Mth.rotLerpRad(swimAmount, state.xRot * 0.017453292F, -Mth.PI / 3);
-                this.head.yRot *= Mth.lerp(swimAmount, 1, 0.5F);
+                this.head.yRot = state.yRot * 0.017453292F * Mth.lerp(swimAmount, 1, 0.5F);
                 info.cancel();
             }
         }
