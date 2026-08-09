@@ -2,6 +2,7 @@ plugins {
     id 'dev.architectury.loom-no-remap' version '1.17-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.5-SNAPSHOT'
     id 'com.gradleup.shadow' version '8.3.6' apply false
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
 }
 
 architectury {
@@ -70,5 +71,60 @@ subprojects {
         }
         repositories {
         }
+    }
+}
+
+publishMods {
+    changelog = ""
+    type = STABLE
+    def mrOptions = modrinthOptions {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.add(project.minecraft_version)
+        environment = CLIENT_AND_SERVER
+        projectId = "ORiydwz3"
+        requires("architectury-api")
+        optional("cloth-config")
+    }
+    def cfOptions = curseforgeOptions {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.add(project.minecraft_version)
+        requires("architectury-api")
+        optional("cloth-config")
+    }
+    modrinth("modrinthFabric") {
+        from mrOptions
+        file project(":fabric")
+        modLoaders.add("fabric")
+        displayName = "Mermod ${project.mod_version} [Fabric ${project.minecraft_version}]"
+        version = "${project.mod_version}-fabric+${project.minecraft_version}"
+        requires("fabric-api")
+        optional("trinkets-updated")
+    }
+    modrinth("modrinthNeoForge") {
+        from mrOptions
+        file project(":neoforge")
+        modLoaders.add("neoforge")
+        displayName = "Mermod ${project.mod_version} [NeoForge ${project.minecraft_version}]"
+        version = "${project.mod_version}-neoforge+${project.minecraft_version}"
+        optional("curios")
+    }
+    curseforge("curseforgeFabric") {
+        from cfOptions
+        file project(":fabric")
+        modLoaders.add("fabric")
+        projectId = "463248"
+        projectSlug = "mermod-fabric"
+        displayName = "Mermod ${project.mod_version} [Fabric ${project.minecraft_version}]"
+        requires("fabric-api")
+        optional("trinkets-updated")
+    }
+    curseforge("curseforgeNeoForge") {
+        from cfOptions
+        file project(":neoforge")
+        modLoaders.add("neoforge")
+        projectId = "709092"
+        projectSlug = "mermod-neoforge"
+        displayName = "Mermod ${project.mod_version} [NeoForge ${project.minecraft_version}]"
+        optional("curios")
     }
 }
